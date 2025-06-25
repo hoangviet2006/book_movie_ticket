@@ -1,0 +1,133 @@
+.ticket-container {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.ticket {
+    display: flex;
+    max-width: 800px;
+    margin: auto;
+    background: #1c1c1c;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.ticket-left img {
+    width: 200px;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ticket-right {
+    flex: 1;
+    padding: 20px;
+    text-align: left;
+    color: white;
+}
+
+.ticket-right p {
+    margin: 10px 0;
+}
+
+.ticket-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.pay-btn, .later-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+.ticket-container h2 {
+    font-size: clamp(36px, 8vw, 62px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: #ff9472;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    letter-spacing: -0.02em;
+    position: relative;
+    animation: titlePulse 3s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% {
+        transform: scale(1);
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 148, 114, 0.3);
+    }
+    50% {
+        transform: scale(1.02);
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(255, 148, 114, 0.5);
+    }
+}
+.pay-btn {
+    background: #ff914d;
+    color: white;
+}
+
+.later-btn {
+    background: #555;
+    color: white;
+}
+
+.hero-content-wrapper {
+    position: relative;
+    z-index: 3;  /* Cao hơn ::before và ::after */
+}
+
+@media screen and (max-width: 768px) {
+    .ticket {
+        flex-direction: column;
+        max-width: 90%;
+    }
+
+    .ticket-left img {
+        width: 100%;
+        height: auto;
+    }
+
+    .ticket-right {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .ticket-right p {
+        font-size: 14px;
+    }
+
+    .ticket-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .pay-btn, .later-btn {
+        width: 100%;
+        max-width: 250px;
+        font-size: 15px;
+        padding: 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .ticket-container {
+        padding: 30px 10px;
+    }
+
+    .ticket-right p {
+        font-size: 13px;
+    }
+
+    .pay-btn, .later-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+}

@@ -1,0 +1,384 @@
+/* === Register Container === */
+.register-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') center/cover fixed;
+    position: relative;
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* === Dark Overlay giống Home === */
+.register-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+            radial-gradient(ellipse at top left, rgba(255, 148, 114, 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse at bottom right, rgba(242, 112, 156, 0.08) 0%, transparent 50%),
+            rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1;
+}
+
+/* === Floating particles effect === */
+.register-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+            radial-gradient(2px 2px at 20px 30px, rgba(255, 148, 114, 0.2), transparent),
+            radial-gradient(2px 2px at 40px 70px, rgba(242, 112, 156, 0.2), transparent),
+            radial-gradient(1px 1px at 90px 40px, rgba(255, 121, 121, 0.2), transparent),
+            radial-gradient(1px 1px at 130px 80px, rgba(255, 148, 114, 0.2), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: particleFloat 25s linear infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes particleFloat {
+    0% { transform: translateY(0px) rotate(0deg); }
+    100% { transform: translateY(-120px) rotate(360deg); }
+}
+
+/* === Register Form === */
+.register-form {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    z-index: 10;
+    box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: formSlideIn 0.8s ease-out;
+}
+
+@keyframes formSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* === Form Title === */
+.register-form h3 {
+    color: #ff9472;
+    font-size: 32px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    position: relative;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    from {
+        text-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.8),
+                0 0 20px rgba(255, 148, 114, 0.3);
+    }
+    to {
+        text-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.8),
+                0 0 30px rgba(255, 148, 114, 0.5);
+    }
+}
+
+.register-form h3::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #ff9472 0%, #f2709c 100%);
+    border-radius: 2px;
+    animation: underlineExpand 1s ease 0.5s forwards;
+    transform-origin: center;
+    scale: 0;
+}
+
+@keyframes underlineExpand {
+    to {
+        scale: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+/* === Labels === */
+.register-form label {
+    display: block;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    margin-bottom: 8px;
+    margin-top: 20px;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.register-form label:first-of-type {
+    margin-top: 0;
+}
+
+/* === Input Fields === */
+.register-form input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    color: #0c0c0c;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-bottom: 5px;
+}
+
+.register-form input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    transition: opacity 0.3s ease;
+}
+
+.register-form input:focus {
+    outline: none;
+    border-color: #ff9472;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow:
+            0 0 0 4px rgba(255, 148, 114, 0.2),
+            0 8px 25px rgba(255, 148, 114, 0.3);
+    transform: translateY(-2px);
+}
+
+.register-form input:focus::placeholder {
+    opacity: 0.3;
+}
+
+/* === Floating Label Effect === */
+.register-form input:focus + label,
+.register-form input:not(:placeholder-shown) + label {
+    color: #ff9472;
+    transform: translateY(-2px);
+}
+
+/* === Error Messages === */
+.register-form .error {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+    padding: 8px 12px;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    animation: errorSlide 0.3s ease;
+}
+
+@keyframes errorSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* === Submit Button === */
+.submit-button {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(45deg, #f2709c, #ff9472);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 25px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(255, 121, 121, 0.4);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.submit-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow:
+            0 15px 40px rgba(255, 121, 121, 0.6),
+            0 0 30px rgba(255, 148, 114, 0.8);
+    background: linear-gradient(45deg, #ff9472, #f2709c);
+}
+
+.submit-button:hover:not(:disabled)::before {
+    left: 100%;
+}
+
+.submit-button:active:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.submit-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* === Loading Spinner === */
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* === Register Link === */
+.register-link {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.register-link span {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+}
+
+.register-link a {
+    color: #ff9472;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 5px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.register-link a::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #ff9472 0%, #f2709c 100%);
+    transition: width 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #f2709c;
+    transform: translateY(-1px);
+}
+
+.register-link a:hover::after {
+    width: 100%;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    .register-form {
+        padding: 30px 25px;
+        margin: 20px;
+        border-radius: 16px;
+    }
+
+    .register-form h3 {
+        font-size: 28px;
+        margin-bottom: 25px;
+    }
+
+    .register-form input {
+        padding: 12px 16px;
+        font-size: 15px;
+    }
+
+    .submit-button {
+        padding: 14px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-container {
+        padding: 15px;
+    }
+
+    .register-form {
+        padding: 25px 20px;
+        border-radius: 12px;
+    }
+
+    .register-form h3 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .register-form label {
+        font-size: 15px;
+    }
+
+    .register-form input {
+        padding: 11px 14px;
+        font-size: 14px;
+    }
+
+    .submit-button {
+        padding: 13px;
+        font-size: 15px;
+    }
+
+    .register-link span,
+    .register-link a {
+        font-size: 15px;
+    }
+}
+
+/* === Performance Optimizations === */
+.register-form,
+.submit-button,
+.register-form input {
+    will-change: transform;
+}

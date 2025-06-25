@@ -1,0 +1,133 @@
+.footer {
+    background: #1a1a1a;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 40px 20px;
+    background-color: #111;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+    padding-right: 20px;
+}
+
+.footer-column h4 {
+    font-size: 1.2rem;
+    color: #ff6600;
+    margin-bottom: 12px;
+}
+
+.footer-column p,
+.footer-column li {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: #ccc;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+.footer-column:last-child {
+    flex: 0 0 280px; /* thu hẹp cột bản đồ */
+    max-width: 280px;
+    margin-left: auto; /* đẩy cột bản đồ sang phải */
+}
+
+.footer-links li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links li a:hover {
+    color: #ff6600;
+}
+
+.social-icons a {
+    margin-right: 12px;
+    color: #ccc;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #ff6600;
+}
+
+.app-links img {
+    height: 40px;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-column {
+        margin-bottom: 20px;
+    }
+
+    .app-links img {
+        height: 35px;
+    }
+}
+.map-container {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 8px rgba(255, 102, 0, 0.3);
+}
+
+
+.footer-column {
+    flex: 1 1 250px;
+    margin: 20px 0;
+}
+
+.footer-map iframe {
+    border-radius: 10px;
+    width: 100%;
+    height: 200px;
+    box-shadow: 0 4px 8px rgba(255, 102, 0, 0.2);
+}
+
+.footer h4 {
+    color: #ffa500;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        padding: 30px 20px;
+    }
+}
+

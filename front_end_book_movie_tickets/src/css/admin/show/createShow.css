@@ -1,0 +1,244 @@
+/* === Create Movie Page Styling === */
+.create-show-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Thay đổi từ center để tránh bị đẩy lên quá cao */
+    min-height: calc(100vh - 80px); /* Trừ đi margin-top của .admin-content */
+    background: transparent; /* Loại bỏ nền mờ để sử dụng nền của admin-layout */
+    padding: 1rem;
+    width: 100%; /* Chiếm toàn bộ chiều rộng của admin-content-inner */
+    box-sizing: border-box;
+    margin-top: 80px;
+}
+
+.create-show {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 148, 114, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    width: 100%;
+    max-width: 1000px; /* Tăng chiều rộng tối đa lên 1000px */
+    box-sizing: border-box;
+    min-height: 450px; /* Đặt chiều cao tối thiểu để giữ form ổn định */
+    position: relative; /* Đảm bảo vị trí tuyệt đối cho lỗi */
+    margin-left: 550px;
+}
+
+/* === Page Header === */
+.create-show h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #ff9472;
+    text-shadow: 0 2px 20px rgba(255, 148, 114, 0.3);
+    margin-bottom: 1.5rem;
+    text-align: left;
+    letter-spacing: -0.02em;
+    animation: titleGlow 4s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% { text-shadow: 0 2px 20px rgba(255, 148, 114, 0.3); transform: scale(1); }
+    50% { text-shadow: 0 2px 30px rgba(255, 148, 114, 0.5); transform: scale(1.02); }
+}
+
+/* === Form Styling === */
+.create-show form {
+    display: grid;
+    gap: 1rem;
+    height: 100%; /* Đảm bảo form chiếm toàn bộ chiều cao container */
+}
+
+.create-show .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative; /* Đặt vị trí cho lỗi */
+}
+
+.create-show label {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.create-show input,
+.create-show textarea {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 148, 114, 0.2);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    /* ❌ Không dùng appearance và background-image */
+}
+/*.create-show input[type="date"] {*/
+/*    background: rgba(0, 0, 0, 0.3);*/
+/*    border: 1px solid rgba(255, 148, 114, 0.2);*/
+/*    color: white;*/
+/*    padding: 0.75rem;*/
+/*    border-radius: 8px;*/
+/*    font-size: 0.9rem;*/
+/*    transition: all 0.3s ease;*/
+/*    width: 100%;*/
+/*    box-sizing: border-box;*/
+/*    appearance: none;*/
+
+/*    !* Hiển thị icon rõ nét hơn *!*/
+/*    background-image: url("data:image/svg+xml,%3Csvg fill='%23ffffff' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z'/%3E%3Cpath d='M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6c0-1.11-.89-2-2-2zm0 16H5V9h14z'/%3E%3C/svg%3E");*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: right 0.75rem center;*/
+/*    background-size: 20px 20px;*/
+/*    padding-right: 2.5rem; !* Thêm khoảng trống bên phải để không bị đè icon *!*/
+/*}*/
+
+.create-show input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* ✅ Làm icon lịch trắng trên nền tối */
+    opacity: 1;
+    cursor: pointer;
+}
+.create-show input[type="date"]:focus {
+    outline: none;
+    border-color: #ff9472;
+    box-shadow: 0 0 0 3px rgba(255, 148, 114, 0.1);
+}
+.create-show select {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 148, 114, 0.2);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+
+    /* ✅ Chỉ dùng cho select */
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23fff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 12px;
+}
+.create-show input:focus,
+.create-show textarea:focus,
+.create-show select:focus {
+    outline: none;
+    border-color: #ff9472;
+    box-shadow: 0 0 0 3px rgba(255, 148, 114, 0.1);
+}
+
+.create-show input::placeholder,
+.create-show textarea::placeholder,
+.create-show select::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* === Error Message === */
+.create-show .text-danger {
+    color: #f44336;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.25rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+/* === Submit Button === */
+.create-show button[type="submit"] {
+    background: linear-gradient(135deg, #ff9472, #f27093);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(255, 148, 114, 0.2);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    display: block;
+}
+
+.create-show button[type="submit"]::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: linear-gradient(180deg, #ff9472, #f27093);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.create-show button[type="submit"]:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 30px rgba(255, 148, 114, 0.3);
+    background: linear-gradient(135deg, #f27093, #ff9472);
+}
+
+.create-show button[type="submit"]:hover::before {
+    transform: scaleY(1);
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    .create-show-container {
+        padding: 1rem;
+    }
+
+    .create-show {
+        padding: 1rem;
+        max-width: 100%;
+        margin-left: 0;
+    }
+
+    .create-show h2 {
+        font-size: clamp(1.2rem, 3.5vw, 2rem);
+    }
+
+    .create-show button[type="submit"] {
+        width: 100%;
+        text-align: center;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .create-show {
+        padding: 0.75rem;
+    }
+
+    .create-show input,
+    .create-show textarea,
+    .create-show select {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+
+    .create-show button[type="submit"] {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        width: 100%;
+        max-width: 100%;
+    }
+}

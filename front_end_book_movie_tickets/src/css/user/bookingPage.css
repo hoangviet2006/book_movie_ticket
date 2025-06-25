@@ -1,0 +1,203 @@
+.booking-page {
+    position: relative;
+    min-height: 100vh;
+    z-index: 3;
+    padding: 2rem;
+    color: #fff;
+}
+
+.overlay-content {
+    position: relative;
+    z-index: 3;
+    max-width: 1200px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+    margin-top: 100px;
+}
+
+.title-booking {
+    font-size: clamp(36px, 8vw, 72px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: #ff9472;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    letter-spacing: -0.02em;
+    position: relative;
+    animation: titlePulse 3s ease-in-out infinite;
+}
+.overlay-content h1 {
+    font-size: clamp(36px, 8vw, 62px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: #ff9472;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    letter-spacing: -0.02em;
+    position: relative;
+    animation: fadeInUp 1s ease 0.5s forwards;
+}
+.overlay-content h2 {
+    font-size: clamp(36px, 8vw, 62px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: #ff9472;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    letter-spacing: -0.02em;
+    position: relative;
+}
+.overlay-content h3 {
+    font-size: clamp(30px, 8vw, 50px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: #ff9472;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    letter-spacing: -0.02em;
+    position: relative;
+}
+.movie-info {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.poster {
+    width: 220px;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.details {
+    flex: 1;
+}
+
+.room-info {
+    margin-top: 2rem;
+}
+
+.seat-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.seat {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid #ffffff33;
+    border-radius: 8px;
+    text-align: center;
+    padding: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: white;
+}
+
+/* Ghế đang chọn */
+.seat.selected {
+    background: linear-gradient(135deg, #ff9472, #f27093);; /* vàng */
+    color: #000;
+}
+
+/* Ghế chưa thanh toán */
+.seat.unpaid {
+    background-color: #ffa500; /* cam */
+    color: white;
+    pointer-events: none;
+}
+
+/* Ghế đã thanh toán */
+.seat.paid {
+    background-color: #28a745; /* xanh */
+    color: white;
+    pointer-events: none;
+}
+.booking-page button {
+    background: linear-gradient(135deg, #ff9472, #f2709c);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 2rem auto;
+    display: block;
+    box-shadow: 0 8px 16px rgba(255, 148, 114, 0.4);
+    transition: all 0.3s ease;
+}
+
+.booking-page button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(255, 148, 114, 0.6);
+    background: linear-gradient(135deg, #f2709c, #ff9472);
+}
+.seat:hover {
+    background-color: rgba(255, 148, 114, 0.5);
+}
+
+.seat.empty {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.seat-legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: white;
+}
+
+.legend-item .seat {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid #ffffff33;
+}
+
+
+@media (max-width: 768px) {
+    .movie-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .poster {
+        width: 100%;
+    }
+    .seat-legend {
+        margin-left: 26px;
+        flex-direction: column;
+        align-items: stretch;
+        font-size: 20px;
+        max-width: 200px;
+    }
+
+    .legend-item {
+        justify-content: flex-start;
+        width: 100%;
+        font-size: 7px;
+    }
+}

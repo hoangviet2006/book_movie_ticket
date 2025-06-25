@@ -1,0 +1,609 @@
+/* === Movie Management Page Styling === */
+.room-management {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 148, 114, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-height: 50vh; /* Đảm bảo container có chiều cao tối thiểu */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Căn giữa nội dung khi không có dữ liệu */
+    margin-top: 80px;
+}
+/* === Page Header === */
+.room-management h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #ff9472;
+    text-shadow: 0 2px 20px rgba(255, 148, 114, 0.3);
+    margin-bottom: 1.5rem;
+    text-align: left;
+    letter-spacing: -0.02em;
+    animation: titleGlow 4s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 0 2px 20px rgba(255, 148, 114, 0.3);
+        transform: scale(1);
+    }
+    50% {
+        text-shadow: 0 2px 30px rgba(255, 148, 114, 0.5);
+        transform: scale(1.02);
+    }
+}
+
+/* === Add Movie Button === */
+.add-room-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #ff9472, #f27093);
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(255, 148, 114, 0.2);
+    margin-bottom: 1.5rem;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.add-room-btn::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: linear-gradient(180deg, #ff9472, #f27093);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.add-room-btn:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 30px rgba(255, 148, 114, 0.3);
+    background: linear-gradient(135deg, #f27093, #ff9472);
+    color: white;
+    text-decoration: none;
+}
+
+.add-room-btn:hover::before {
+    transform: scaleY(1);
+}
+
+/* === Search Form === */
+.search-form {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 148, 114, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* === Search Field === */
+.search-field {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 1rem;
+    align-items: end;
+    width: 100%;
+    min-width: 0;
+}
+
+.search-field label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.search-field input {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 148, 114, 0.2);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.search-field input:focus {
+    outline: none;
+    border-color: #ff9472;
+    box-shadow: 0 0 0 3px rgba(255, 148, 114, 0.1);
+}
+
+.search-field input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* === Search Button === */
+.search-btn {
+    background: linear-gradient(135deg, #ff9472, #f27093);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(255, 148, 114, 0.2);
+    height: fit-content;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.search-btn::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: linear-gradient(180deg, #ff9472, #f27093);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.search-btn:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 30px rgba(255, 148, 114, 0.3);
+    background: linear-gradient(135deg, #f27093, #ff9472);
+}
+
+.search-btn:hover::before {
+    transform: scaleY(1);
+}
+
+/* === Movies Table === */
+.room-table-container {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 148, 114, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.room-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    table-layout: fixed;
+    box-sizing: border-box;
+}
+
+.room-table thead {
+    background: rgba(255, 148, 114, 0.2);
+}
+
+.room-table th {
+    color: #ff9472;
+    padding: 1rem 0.75rem;
+    font-weight: 700;
+    text-align: left;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(255, 148, 114, 0.2);
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.room-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba(255, 148, 114, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    vertical-align: middle;
+    text-align: left;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Define specific column widths */
+.room-table th:nth-child(1),
+.room-table td:nth-child(1) {
+    width: 4%;
+    min-width: 50px;
+}
+
+.room-table th:nth-child(2),
+.room-table td:nth-child(2) {
+    width: 10%;
+    min-width: 120px;
+}
+
+.room-table th:nth-child(3),
+.room-table td:nth-child(3) {
+    width: 7%;
+    min-width: 150px;
+}
+
+.room-table th:nth-child(4),
+.room-table td:nth-child(4) {
+    width: 12%;
+    min-width: 80px;
+}
+
+.room-table th:nth-child(5),
+.room-table td:nth-child(5) {
+    width: 7%;
+    min-width: 70px;
+}
+
+.room-table th:nth-child(6),
+.room-table td:nth-child(6) {
+    width: 12%;
+    min-width: 90px;
+}
+
+.room-table th:nth-child(7),
+.room-table td:nth-child(7) {
+    width: 15%;
+    min-width: 100px;
+    white-space: nowrap;
+}
+
+.room-table th:nth-child(8),
+.room-table td:nth-child(8) {
+    width: 15%;
+    min-width: 120px;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.room-table tr:hover {
+    background: rgba(255, 148, 114, 0.05);
+}
+
+.room-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* === Movie Description === */
+.room-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+/* === Action Buttons === */
+.room-table td:nth-child(8) {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.room-btn {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    width: fit-content;
+}
+
+.edit-btn {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(76, 175, 80, 0.2);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-left: 10px;
+}
+
+.edit-btn::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(180deg, #4CAF50, #45a049);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.edit-btn:hover {
+    transform: translateX(3px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.edit-btn:hover::before {
+    transform: scaleY(1);
+}
+
+.delete-btn-table {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(244, 67, 54, 0.2);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.delete-btn-table::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(180deg, #f44336, #d32f2f);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.delete-btn-table:hover {
+    transform: translateX(3px);
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.3);
+}
+
+.delete-btn-table:hover::before {
+    transform: scaleY(1);
+}
+
+/* === Modal Styling === */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.custom-modal {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 148, 114, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    max-width: 400px;
+    width: 90%;
+    text-align: left;
+}
+
+.custom-modal h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ff9472;
+    text-shadow: 0 2px 8px rgba(255, 148, 114, 0.2);
+    margin-bottom: 1rem;
+}
+
+.custom-modal p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+.cancel-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ff9472;
+    border: 1px solid rgba(255, 148, 114, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+.cancel-btn:hover {
+    background: rgba(255, 148, 114, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255, 148, 114, 0.3);
+}
+
+.edit-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ff9472;
+    border: 1px solid rgba(255, 148, 114, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+.edit-btn:hover {
+    background: rgba(255, 148, 114, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255, 148, 114, 0.3);
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.2);
+}
+
+.delete-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.3);
+    background: linear-gradient(135deg, #d32f2f, #f44336);
+}
+
+/* === No Data Message === */
+.no-data-message {
+    text-align: center;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    border: 1px dashed rgba(255, 148, 114, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 80%; /* Giới hạn chiều rộng */
+    max-width: 500px; /* Chiều rộng tối đa */
+    margin: 0 auto; /* Căn giữa theo chiều ngang */
+}
+
+/* === Responsive Design === */
+@media (max-width: 1200px) {
+    .search-field {
+        grid-template-columns: 1fr 1fr 1fr auto;
+        gap: 0.5rem;
+    }
+
+    .search-btn {
+        justify-self: start;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .room-table-container {
+        overflow-x: auto;
+    }
+
+    .room-table {
+        min-width: 800px;
+    }
+
+    .room-table th,
+    .room-table td {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .search-field {
+        grid-template-columns: 1fr 1fr 1fr auto;
+        gap: 0.25rem;
+    }
+
+    .search-btn {
+        padding: 0.5rem 1rem;
+    }
+    .room-management {
+        padding: 1rem;
+        min-height: 40vh; /* Giảm chiều cao tối thiểu trên màn hình nhỏ */
+    }
+
+    .no-data-message {
+        width: 90%;
+        padding: 1.5rem;
+    }
+
+
+
+
+}
+
+@media (max-width: 480px) {
+    .room-management {
+        padding: 0.75rem;
+        min-height: 30vh; /* Giảm thêm trên màn hình rất nhỏ */
+    }
+
+    .search-form {
+        padding: 1rem;
+    }
+
+    .add-room-btn {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .room-table {
+        min-width: 900px;
+    }
+
+    .search-field {
+        grid-template-columns: 1fr 1fr 1fr auto;
+        gap: 0.25rem;
+    }
+    .search-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    .no-data-message {
+        width: 95%;
+        padding: 1rem;
+    }
+    .search-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}

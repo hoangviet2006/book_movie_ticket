@@ -1,0 +1,139 @@
+.confirm-booking {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    z-index: 3;
+    position: relative;
+}
+
+.confirm-booking img {
+    width: 200px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.selected-seats {
+    margin-top: 30px;
+}
+
+.selected-seats p {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 20px;
+    margin: 5px;
+    font-weight: bold;
+    color: #fff;
+}
+.selected-seats {
+    margin: 30px auto 0 auto; /* căn giữa mặc định */
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(255, 148, 114, 0.2);
+}
+
+@media screen and (min-width: 768px) {
+    /*.selected-seats {*/
+    /*    margin: 30px 0 0 120px; !* đẩy lệch trái khi cần *!*/
+    /*}*/
+}
+@media screen and (max-width: 480px) {
+    .confirm-booking {
+        padding: 20px;
+    }
+
+    .selected-seats {
+        padding: 15px;
+    }
+
+    .selected-seats h3,
+    .total-price {
+        font-size: 16px;
+    }
+
+    .seat-list p {
+        font-size: 13px;
+        padding: 4px 10px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .confirm-booking {
+        padding: 20px;
+    }
+
+    .selected-seats {
+        padding: 15px;
+        margin: 20px auto 0 auto; /* luôn căn giữa */
+    }
+
+    .selected-seats h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .seat-list {
+        gap: 6px;
+        justify-content: center; /* căn giữa các ghế */
+    }
+
+    .seat-list p {
+        font-size: 13px;
+        padding: 4px 10px;
+        border-radius: 5px;
+    }
+
+    .total-price {
+        font-size: 16px;
+        margin-top: 15px;
+    }
+
+    .confirm-booking img {
+        width: 150px;
+    }
+
+    .confirm-booking h2 {
+        font-size: 20px;
+    }
+
+    .confirm-booking p {
+        font-size: 14px;
+    }
+}
+.selected-seats h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.seat-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.seat-list p {
+    background-color: #ff9472;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: white;
+    margin: 0;
+}
+
+.total-price {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #ff9472;
+}

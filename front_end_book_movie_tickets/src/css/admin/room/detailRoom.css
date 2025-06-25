@@ -1,0 +1,153 @@
+/* === Detail Room Page Styling === */
+.detail-room-container {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 148, 114, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    width: 100%;
+    max-width: 1000px;
+    box-sizing: border-box;
+    margin: 90px auto 0;
+    overflow-x: hidden;
+    margin-left: 350px;
+}
+
+/* === Page Header === */
+.detail-room-container h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #ff9472;
+    text-shadow: 0 2px 20px rgba(255, 148, 114, 0.3);
+    margin-bottom: 1.5rem;
+    text-align: left;
+    letter-spacing: -0.02em;
+    animation: titleGlow 4s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 0 2px 20px rgba(255, 148, 114, 0.3);
+        transform: scale(1);
+    }
+    50% {
+        text-shadow: 0 2px 30px rgba(255, 148, 114, 0.5);
+        transform: scale(1.02);
+    }
+}
+
+/* === Detail Information === */
+.detail-room-container p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.detail-room-container p:hover {
+    background: rgba(255, 148, 114, 0.1);
+    color: #ffffff;
+}
+
+.detail-room-container strong {
+    color: #ff9472;
+    margin-right: 0.5rem;
+}
+
+/* === Seat List Section === */
+.detail-room-container h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ff9472;
+    text-shadow: 0 2px 8px rgba(255, 148, 114, 0.2);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+.seat-list {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr); /* 15 ghế mỗi hàng */
+    gap: 8px;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 148, 114, 0.1);
+}
+
+.seat-list button {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
+    white-space: nowrap;
+}
+
+.seat-list button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+    background: linear-gradient(135deg, #45a049, #4CAF50);
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    .detail-room-container {
+        padding: 1rem;
+        margin: 60px auto 0; /* Giảm margin-top trên màn hình nhỏ */
+    }
+
+    .detail-room-container h2 {
+        font-size: clamp(1.2rem, 3.5vw, 2rem);
+    }
+
+    .detail-room-container p {
+        font-size: 0.85rem;
+        padding: 0.4rem;
+    }
+
+    .seat-list {
+        padding: 0.75rem;
+        gap: 6px;
+    }
+
+    .seat-list button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .detail-room-container {
+        padding: 0.75rem;
+    }
+
+    .detail-room-container h2 {
+        font-size: 1.2rem;
+    }
+
+    .detail-room-container p {
+        font-size: 0.8rem;
+        padding: 0.3rem;
+    }
+
+    .seat-list {
+        padding: 0.5rem;
+        gap: 4px;
+    }
+
+    .seat-list button {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+}

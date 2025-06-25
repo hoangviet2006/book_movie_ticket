@@ -1,0 +1,192 @@
+/* === Create Movie Page Styling === */
+.create-movie-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Thay đổi từ center để tránh bị đẩy lên quá cao */
+    min-height: calc(100vh - 80px); /* Trừ đi margin-top của .admin-content */
+    background: transparent; /* Loại bỏ nền mờ để sử dụng nền của admin-layout */
+    padding: 1rem;
+    width: 100%; /* Chiếm toàn bộ chiều rộng của admin-content-inner */
+    box-sizing: border-box;
+    margin-top: 80px;
+}
+
+.create-movie {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 148, 114, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    width: 100%;
+    max-width: 1000px; /* Tăng chiều rộng tối đa lên 1000px */
+    box-sizing: border-box;
+    min-height: 500px; /* Đặt chiều cao tối thiểu để giữ form ổn định */
+    position: relative; /* Đảm bảo vị trí tuyệt đối cho lỗi */
+    margin-left: 550px;
+}
+
+/* === Page Header === */
+.create-movie h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #ff9472;
+    text-shadow: 0 2px 20px rgba(255, 148, 114, 0.3);
+    margin-bottom: 1.5rem;
+    text-align: left;
+    letter-spacing: -0.02em;
+    animation: titleGlow 4s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% { text-shadow: 0 2px 20px rgba(255, 148, 114, 0.3); transform: scale(1); }
+    50% { text-shadow: 0 2px 30px rgba(255, 148, 114, 0.5); transform: scale(1.02); }
+}
+
+/* === Form Styling === */
+.create-movie form {
+    display: grid;
+    gap: 1rem;
+    height: 100%; /* Đảm bảo form chiếm toàn bộ chiều cao container */
+}
+
+.create-movie .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative; /* Đặt vị trí cho lỗi */
+}
+
+.create-movie label {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.create-movie input,
+.create-movie textarea {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 148, 114, 0.2);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.create-movie textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.create-movie input:focus,
+.create-movie textarea:focus {
+    outline: none;
+    border-color: #ff9472;
+    box-shadow: 0 0 0 3px rgba(255, 148, 114, 0.1);
+}
+
+.create-movie input::placeholder,
+.create-movie textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* === Error Message === */
+.create-movie .text-danger {
+    color: #f44336;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    position: absolute; /* Hiển thị lỗi tuyệt đối */
+    bottom: -20px; /* Đặt lỗi ngay dưới input */
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.25rem;
+    background: rgba(0, 0, 0, 0.5); /* Thêm nền để lỗi nổi bật */
+    border-radius: 4px;
+}
+
+/* === Submit Button === */
+.create-movie button[type="submit"] {
+    background: linear-gradient(135deg, #ff9472, #f27093);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(255, 148, 114, 0.2);
+    position: relative;
+    overflow: hidden;
+    width: fit-content;
+    align-self: flex-start;
+}
+
+.create-movie button[type="submit"]::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: linear-gradient(180deg, #ff9472, #f27093);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.create-movie button[type="submit"]:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 30px rgba(255, 148, 114, 0.3);
+    background: linear-gradient(135deg, #f27093, #ff9472);
+}
+
+.create-movie button[type="submit"]:hover::before {
+    transform: scaleY(1);
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    .create-movie-container {
+        padding: 1rem;
+    }
+
+    .create-movie {
+        padding: 1rem;
+        max-width: 100%; /* Mở rộng toàn bộ trên màn hình nhỏ */
+    }
+
+    .create-movie h2 {
+        font-size: clamp(1.2rem, 3.5vw, 2rem);
+    }
+
+    .create-movie button[type="submit"] {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .create-movie {
+        padding: 0.75rem;
+    }
+
+    .create-movie input,
+    .create-movie textarea {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+
+    .create-movie button[type="submit"] {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+}
