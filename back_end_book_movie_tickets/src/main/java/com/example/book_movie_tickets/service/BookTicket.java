@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +47,6 @@ public class BookTicket implements IBookTicket {
             Booking booking = new Booking();
             booking.setUser(user.get());
             booking.setShows(shows);
-            booking.setPaymentTime(null);
             booking.setStatus(Booking.Status.UNPAID);
             booking.setSoftDelete(false);
             double price = shows.getMovie().getPrice();
@@ -65,12 +65,20 @@ public class BookTicket implements IBookTicket {
             for (Integer item: bookingRequest.getIdSeats()){
                 Optional<Seat> seat = seatRepository.findById(item);
                 if (seat.isPresent()){
+                    int count= ticketRepository.countTicketBySeat(seat.get().getId(),bookingRequest.getIdShow(),user.get().getId());
+                    if (count>=1) {
+                        List<String> seats = ticketRepository.findSeatCodeByTicket(bookingRequest.getIdSeats(),bookingRequest.getIdShow());
+                        String seatNames = String.join(", ", seats);
+                        System.out.println("Ghế đã bị đặt: "+seatNames);
+                        throw new RuntimeException("Ghế: " + seatNames + " đã được đặt bởi người khác. Vui lòng chọn lại.");
+                    }
                     Ticket ticket = new Ticket();
                     double priceTicket = totalPrice/bookingRequest.getIdSeats().size();
                     ticket.setPrice(priceTicket);
                     ticket.setStatus(Ticket.Status.UNPAID);
                     ticket.setBooking(booking);
                     ticket.setSeat(seat.get());
+                    ticket.setBookTicketTime(LocalDateTime.now());
                     Ticket saveTicket = ticketRepository.save(ticket);
                     ticketIds.add(saveTicket.getId());
                 }

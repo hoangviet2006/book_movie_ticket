@@ -19,6 +19,9 @@ create table movie(
   poster_url varchar(255),
   release_date date
 ); 
+ALTER TABLE movie
+MODIFY COLUMN description TEXT,
+MODIFY COLUMN poster_url TEXT;
 create table cinema(
   id int primary key auto_increment,
   name varchar(255),
@@ -133,7 +136,7 @@ insert into ticket (price, status, booking_id, seat_id) values
 (120000, 'PAID', 37, 11),
 (100000, 'PAID', 38, 16),
 (100000, 'PAID', 39, 17),
-(100000, 'PAID', 40, 18)
+(100000, 'PAID', 40, 18);
 
 
 -- select * from seat s join room r on r.id=s.room_id where r.id=1;
@@ -240,4 +243,32 @@ insert into ticket (price, status, booking_id, seat_id) values
 --     and m.soft_delete=false 
 --     and r.soft_delete=false 
 --     and sh.id=14;
-    
+    select sh.id as idShow,
+                     sh.date_show as dateShow,
+                       sh.start_time as startTime,
+                       sh.end_time as endTime,
+                       m.title as titleMovie,
+                       m.description as description,
+                       m.duration as duration,
+                       m.genre as genreMovie,
+                       m.poster_url as urlMovie,
+                       m.price as priceMovie,
+                       r.name as nameRoom,
+                       r.seat_count as seatCount,
+                       s.id as seatId,
+                       s.seat_code as seatCode,
+                       t.status as statusTicket,
+                       c.name as nameCinema,
+                       c.address addressCinema
+				       from shows sh 
+                       join movie m on m.id=sh.movie_id
+                       join room r on r.id=sh.room_id 
+                       join seat s on r.id=s.room_id 
+                       left join ticket t on t.seat_id=s.id
+                       and t.booking_id in (select b.id from booking b where b.show_id=sh.id)
+                       right join cinema c on c.id=r.cinema_id
+                       where sh.soft_delete=false
+                       and m.soft_delete=false 
+					   and r.soft_delete=false
+                       and c.soft_delete=false
+                       and sh.id=1

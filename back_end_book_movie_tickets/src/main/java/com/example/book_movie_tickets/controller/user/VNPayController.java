@@ -2,7 +2,9 @@ package com.example.book_movie_tickets.controller.user;
 
 import com.example.book_movie_tickets.config.ConfigVNPay;
 import com.example.book_movie_tickets.dto.PaymentResponse;
+import com.example.book_movie_tickets.model.Booking;
 import com.example.book_movie_tickets.model.Ticket;
+import com.example.book_movie_tickets.repository.IBookingRepository;
 import com.example.book_movie_tickets.repository.ITicketRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -27,6 +29,8 @@ import java.util.stream.Collectors;
 public class VNPayController {
     @Autowired
     private ITicketRepository ticketRepository;
+    @Autowired
+    private IBookingRepository bookingRepository;
     @PostMapping("")
     public ResponseEntity<?> createPayment(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         try {
@@ -153,7 +157,8 @@ public class VNPayController {
             com.google.gson.JsonObject job = new com.google.gson.JsonObject();
             job.addProperty("code", "00");
             job.addProperty("message", "success");
-            job.addProperty("data", paymentUrl);;
+            job.addProperty("data", paymentUrl);
+            ;
             PaymentResponse response = new PaymentResponse("00", "success", paymentUrl);
             System.out.println("🎯 ticketIdsStr =----------- " + req.getParameter("ticketIds"));
             return ResponseEntity.ok(response);
@@ -166,6 +171,7 @@ public class VNPayController {
         }
 
     }
+
     @GetMapping("/vnpay-return")
     public void vnpayReturn(@RequestParam Map<String, String> allParams, HttpServletResponse response) throws Exception {
         String secureHash = allParams.remove("vnp_SecureHash"); // Lấy và loại bỏ hash khỏi map
@@ -174,20 +180,29 @@ public class VNPayController {
         String message;
         String txnRef = allParams.get("vnp_TxnRef");
 
-            if ("00".equals(allParams.get("vnp_ResponseCode"))) {
-
-                List<Ticket> tickets = ticketRepository.findByTxnRef(txnRef);
-                for (Ticket t : tickets) {
-                    t.setStatus(Ticket.Status.PAID);
-                }
-                ticketRepository.saveAll(tickets);
-                message = "Thanh toán thành công";
-                response.sendRedirect("http://localhost:3000?status=success&txnRef=" + txnRef +
-                                      "&message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
-            } else {
-                message = "Thanh toán thất bại: Mã " + allParams.get("vnp_ResponseCode");
-                response.sendRedirect("http://localhost:3000?status=fail&txnRef=" + txnRef +
-                                      "&message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
+        if ("00".equals(allParams.get("vnp_ResponseCode"))) {
+            List<Ticket> tickets = ticketRepository.findByTxnRef(txnRef);
+            if (tickets.isEmpty()){
+                response.sendRedirect("http://localhost:3000?status=fail&message=+" +
+                                      URLEncoder.encode("Không tìm thấy vé",StandardCharsets.UTF_8));
+                return;
             }
+            Booking booking = bookingRepository.findById(tickets.get(0).getBooking().getId());
+            if (booking!=null){
+                booking.setStatus(Booking.Status.PAID);
+                bookingRepository.save(booking);
+            }
+            for (Ticket t : tickets) {
+                t.setStatus(Ticket.Status.PAID);
+            }
+            ticketRepository.saveAll(tickets);
+            message = "Thanh toán thành công";
+            response.sendRedirect("http://localhost:3000?status=success&txnRef=" + txnRef +
+                                  "&message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
+        } else {
+            message = "Thanh toán thất bại: Mã " + allParams.get("vnp_ResponseCode");
+            response.sendRedirect("http://localhost:3000?status=fail&txnRef=" + txnRef +
+                                  "&message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
+        }
     }
 }

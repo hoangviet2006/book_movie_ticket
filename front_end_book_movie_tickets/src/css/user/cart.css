@@ -1,0 +1,368 @@
+/* === Cart Container === */
+.cart-container {
+    min-height: 100vh;
+    position: relative;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') center/cover fixed;
+    overflow: hidden;
+    padding: 80px 0;
+}
+
+/* === Dark Overlay với subtle color hints === */
+.cart-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(255, 148, 114, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(242, 112, 156, 0.08) 0%, transparent 50%),
+    rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1;
+}
+
+/* === Floating particles effect === */
+.cart-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(2px 2px at 20px 30px, rgba(255, 148, 114, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(242, 112, 156, 0.3), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 121, 121, 0.3), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 148, 114, 0.3), transparent),
+    radial-gradient(2px 2px at 160px 30px, rgba(242, 112, 156, 0.3), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: particleFloat 20s linear infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+    }
+}
+
+/* === Cart Content === */
+.cart-content {
+    position: relative;
+    z-index: 3;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* === Cart Title === */
+.cart-title {
+    text-align: center;
+    color: #fff;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, #ff9472, #f2709c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* === Empty Cart Message === */
+.empty-cart-message {
+    text-align: center;
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 4rem 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* === Cart Items Container === */
+.cart-items {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+}
+
+/* === Cart Item Card === */
+.cart-item {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 1.5rem;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.cart-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 148, 114, 0.5);
+}
+
+.cart-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ff9472, #f2709c, #ff7979);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cart-item:hover::before {
+    opacity: 1;
+}
+
+/* === Movie Poster === */
+.cart-item-poster {
+    flex-shrink: 0;
+    width: 150px;
+    height: 220px;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-right: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.cart-item-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.cart-item:hover .cart-item-poster img {
+    transform: scale(1.05);
+}
+
+/* === Movie Details === */
+.cart-item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.cart-item-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.cart-item-info {
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.cart-item-info strong {
+    color: #ff9472;
+    font-weight: 600;
+}
+
+/* === Status Badge và Payment Button Container === */
+.status-payment-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px solid transparent;
+}
+
+.status-paid {
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
+    border-color: rgba(0, 184, 148, 0.3);
+}
+
+.status-unpaid {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+    border-color: rgba(231, 76, 60, 0.3);
+}
+
+/* === Pay Now Button === */
+.pay-now-button {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+    border: 2px solid rgba(243, 156, 18, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.pay-now-button:hover {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(230, 126, 34, 0.5);
+    border-color: rgba(230, 126, 34, 0.5);
+}
+
+.pay-now-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(230, 126, 34, 0.3);
+}
+
+.pay-now-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.pay-now-button:hover::before {
+    left: 100%;
+}
+
+/* === Price Highlight === */
+.price-highlight {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ff9472;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* === Loading State === */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    position: relative;
+    z-index: 3;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #ff9472;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    .cart-container {
+        padding: 60px 0;
+    }
+
+    .cart-content {
+        padding: 0 15px;
+    }
+
+    .cart-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .cart-item-poster {
+        width: 120px;
+        height: 180px;
+        margin: 0 auto 1rem auto;
+    }
+
+    .cart-item-title {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .cart-item-info {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-title {
+        font-size: 1.8rem;
+    }
+
+    .cart-item-poster {
+        width: 100px;
+        height: 150px;
+    }
+
+    .cart-item-title {
+        font-size: 1.1rem;
+    }
+
+    .cart-item-info {
+        font-size: 0.85rem;
+    }
+}
+
+/* === Smooth Scrolling === */
+html {
+    scroll-behavior: smooth;
+}
+
+/* === Custom Scrollbar === */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #ff9472, #f2709c);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #f2709c, #ff7979);
+}

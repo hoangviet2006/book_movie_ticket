@@ -57,7 +57,8 @@ const ConfirmBookingTicket = () => {
             localStorage.removeItem("ListCode");
             setIsShowModal(false)
         } catch (e) {
-            console.log("Lỗi: " + e?.response?.data)
+            navigate(-1);
+            toast.warning(e?.response?.data)
         }
     }
     const closeModal=()=>{

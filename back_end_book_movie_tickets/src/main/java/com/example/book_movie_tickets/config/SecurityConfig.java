@@ -37,6 +37,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/movie/**").permitAll()
                         .requestMatchers("/api/admin/**").permitAll()
                         .requestMatchers("/api/user/**").permitAll()
+                        .requestMatchers("/api/cart/**").permitAll()
+                        .requestMatchers("/ws-seat/**").permitAll()
                         .requestMatchers("/api/payment/vnpay/**").permitAll()
                         .requestMatchers("/api/user/forgot-password").permitAll()
                         .requestMatchers("/api/user/forgot-password-otp").permitAll()

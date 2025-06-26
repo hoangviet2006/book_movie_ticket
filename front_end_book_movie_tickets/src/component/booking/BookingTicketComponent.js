@@ -1,11 +1,13 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState,useRef} from "react";
 import {detailBookingShow} from "../../service/userService/ShowService";
 import {useNavigate, useParams} from "react-router-dom";
 import "../../css/user/bookingPage.css"
 import HeaderComponent from "../homePage/HeaderComponent";
 import FooterComponent from "../homePage/FooterComponent";
+import useSeatWebSocket from "../socket/useSeatWebSocket";
 
 const BookingTicketComponent = () => {
+
     const {id} = useParams();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,11 +15,14 @@ const BookingTicketComponent = () => {
     const [selectSeatCode, setSelectSeatCode] = useState([]);
     const [confirmIdSeat, setConfirmIdSeat] = useState([]);
     const navigate = useNavigate();
+    const idShowRef = useRef(null);
+
     useEffect(() => {
         try {
             const fetchData = async () => {
                 const response = await detailBookingShow(id);
-                setData(response)
+                setData(response);
+                idShowRef.current=response.idShow;
             }
             fetchData();
         } catch (e) {
@@ -27,11 +32,26 @@ const BookingTicketComponent = () => {
         }
 
     }, [confirmIdSeat]);
+
     const toggleSelectSeat = (seatId, seatCode) => {
-        setSelectSeatId((pre) =>
-            pre.includes(seatId) ? pre.filter((id) => id !== seatId) : [...pre, seatId])
-        setSelectSeatCode((pre) =>
-            pre.includes(seatCode) ? pre.filter((code) => code !== seatCode) : [...pre, seatCode])
+        const isSelected = selectSeatId.includes(seatId);
+        if (isSelected) {
+            setSelectSeatId(pre => pre.filter(id => id !== seatId));
+            setSelectSeatCode(pre => pre.filter(code => code !== seatCode));
+            handleSendSelectSeat({
+                seatId: seatId,
+                idShow: data.idShow,
+                held: false
+            });
+        } else {
+            setSelectSeatId(pre => [...pre, seatId]);
+            setSelectSeatCode(pre => [...pre, seatCode]);
+            handleSendSelectSeat({
+                seatId: seatId,
+                idShow: data.idShow,
+                held: true
+            })
+        }
     }
     const handleBooking = async (arrayId, arrayCode) => {
         setConfirmIdSeat(arrayId)
@@ -41,6 +61,28 @@ const BookingTicketComponent = () => {
         setSelectSeatId([])
         navigate('/confirm-booking')
     }
+
+
+    const handleWebSocketSelectSeat = (seatDto) => {
+        if (!idShowRef.current) return;
+        if (seatDto.idShow === idShowRef.current) {
+            setData((pre) => {
+                if (!pre || !pre.seatStatusDto) return pre;
+                const newSeatStatus = pre.seatStatusDto.map(seat => {
+                    if (Number(seat.seatId)=== Number(seatDto.seatId)) {
+                        console.log("Cập nhật trạng thái ghế", seat.seatId, "thành HELD trong show " + data.idShow);
+                        return {
+                            ...seat,
+                            seatStatus: seatDto.held ? "HELD" : "EMPTY"
+                        }
+                    }
+                    return seat;
+                })
+                return {...pre, seatStatusDto: newSeatStatus}
+            })
+        }
+    }
+    const {handleSendSelectSeat} = useSeatWebSocket(handleWebSocketSelectSeat)
     if (loading) return <div style={{color: "white", padding: "2rem"}}>Đang tải dữ liệu...</div>;
     if (!data) return <div style={{color: "white", padding: "2rem"}}>Không tìm thấy suất chiếu</div>;
     return (
@@ -78,6 +120,8 @@ const BookingTicketComponent = () => {
                                     seatClass += " unpaid";
                                 } else if (isSelected) {
                                     seatClass += " selected";
+                                } else if (seat.seatStatus === "HELD") {
+                                    seatClass += " disabled";
                                 } else {
                                     seatClass += " empty";
                                 }
@@ -85,7 +129,7 @@ const BookingTicketComponent = () => {
                                     <div key={seat.seatId}
                                          className={seatClass}
                                          onClick={() => {
-                                             if (!seat.seatStatus) {
+                                             if (!["PAID", "UNPAID"].includes(seat.seatStatus)) {
                                                  toggleSelectSeat(seat?.seatId, seat?.seatCode);
                                              }
                                          }}
@@ -111,6 +155,10 @@ const BookingTicketComponent = () => {
                             <div className="legend-item">
                                 <div className="seat empty"></div>
                                 <span>Chưa có người đặt</span>
+                            </div>
+                            <div className="legend-item">
+                                <div className="seat disabled"></div>
+                                <span>Đang được người khác chọn</span>
                             </div>
                         </div>
                     </div>

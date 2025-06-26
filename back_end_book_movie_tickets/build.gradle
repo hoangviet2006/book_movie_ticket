@@ -54,6 +54,9 @@ dependencies {
 
     // Spring Boot Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // websocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 tasks.named('test') {

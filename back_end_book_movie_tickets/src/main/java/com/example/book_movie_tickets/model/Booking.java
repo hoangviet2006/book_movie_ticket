@@ -22,8 +22,6 @@ public class Booking {
     private double totalPrice;
     @Enumerated(EnumType.STRING)
     private Status status=Status.UNPAID;
-    @Column(name = "payment_time")
-    private LocalDateTime paymentTime;
     @Column(name = "soft_delete")
     private boolean softDelete;
     @JoinColumn(name = "user_id")

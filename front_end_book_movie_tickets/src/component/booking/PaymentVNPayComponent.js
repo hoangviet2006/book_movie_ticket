@@ -45,45 +45,15 @@ const PaymentVNPayComponent = () => {
                 }
             } catch (error) {
                 console.error("Lỗi thanh toán:", error);
-                console.error("Chi tiết lỗi:", error?.response?.data || error.message);
                 toast.error("Lỗi khi kết nối đến hệ thống thanh toán");
             }
         }
         sendPaymentRequest();
     }, [ticketData,navigate]);
-    const handleSimulateSuccess = async () => {
-        try {
-            const res = await axios.get(`https://gold-designing-blast-irrigation.trycloudflare.com/api/payment/vnpay/vnpay-return?vnp_TxnRef=${txnRef}&vnp_ResponseCode=00`);
-            if (res.data === "Thanh toán thành công") {
-                toast.success(" Đã thanh toán thành công!");
-                navigate("/");
-            } else {
-                toast.error("❌ " + res.data);
-            }
-        } catch (e) {
-            console.error(e);
-            toast.error("Lỗi khi gửi request giả lập!");
-        }
-    };
     return (
         <div style={{textAlign: "center", marginTop: "50px"}}>
             <h2>Đang chuyển hướng đến VNPay...</h2>
-            {txnRef && (
-                <button
-                    style={{
-                        marginTop: "20px",
-                        padding: "10px 20px",
-                        backgroundColor: "#ff6600",
-                        color: "#fff",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer"
-                    }}
-                    onClick={handleSimulateSuccess}
-                >
-                    🧪 Giả lập thanh toán thành công
-                </button>
-            )}
+
         </div>
     );
 }

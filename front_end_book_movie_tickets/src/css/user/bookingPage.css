@@ -115,6 +115,13 @@
     color: white;
     pointer-events: none;
 }
+.seat.disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    pointer-events: none; /* ← Chặn mọi click */
+    opacity: 0.4;
+}
+
 
 /* Ghế đã thanh toán */
 .seat.paid {

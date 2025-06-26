@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -25,6 +27,8 @@ public class Ticket {
         UNPAID,
         CANCELLED
     }
+    @Column(name = "book_ticket_time")
+    private LocalDateTime bookTicketTime;
     @Column(name = "txn_ref")
     private String txnRef;
     @JoinColumn(name = "booking_id")

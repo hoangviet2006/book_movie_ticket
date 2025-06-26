@@ -69,7 +69,7 @@ public interface IMovieRepository extends JpaRepository<Movie,Integer> {
                    "join cinema c on c.id=r.cinema_id where m.id = ?1 and s.soft_delete = false\n" +
                    "and r.soft_delete = false and m.soft_delete=false \n" +
                    "and c.soft_delete = false \n" +
-                   "",nativeQuery = true) // AND STR_TO_DATE(CONCAT(s.date_show, ' ', s.end_time), '%Y-%m-%d %H:%i:%s') > NOW()
+                   "and STR_TO_DATE(CONCAT(s.date_show, ' ', s.end_time), '%Y-%m-%d %H:%i:%s') > NOW()",nativeQuery = true) // AND STR_TO_DATE(CONCAT(s.date_show, ' ', s.end_time), '%Y-%m-%d %H:%i:%s') > NOW()
     List<RequestMovieOnShowDto> detailShowOnIdMovie(int idMovie);
 
 }

@@ -33,6 +33,7 @@ import ConfirmBookingTicket from "./component/booking/ConfirmBookingTicket";
 import ViewBookingComponent from "./component/booking/ViewBookingComponent";
 import PaymentVNPayComponent from "./component/booking/PaymentVNPayComponent";
 import TicketBookingHistoryComponent from "./component/user/TicketBookingHistoryComponent";
+import CartComponent from "./component/user/CartComponent";
 function App() {
   return (
     <>
@@ -70,7 +71,7 @@ function App() {
         <Route path={"/confirm-booking"} element={<ConfirmBookingTicket/>}></Route>
         <Route path={"/booking-view"} element={<ViewBookingComponent/>}></Route>
         <Route path={"/payment-vnpay"} element={<PaymentVNPayComponent/>}></Route>
-        <Route path={"/user/booking/history"} element={<TicketBookingHistoryComponent/>}></Route>
+        <Route path={"/user/booking/history"} element={<CartComponent/>}></Route>
 
       </Routes>
     </>

@@ -53,8 +53,6 @@ const ViewBookingComponent = () => {
                         </div>
                     </div>
                 </div>
-
-
             </div>
             <FooterComponent/>
         </>

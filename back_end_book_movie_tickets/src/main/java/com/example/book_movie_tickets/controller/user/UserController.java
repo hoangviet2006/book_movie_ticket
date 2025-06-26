@@ -136,7 +136,8 @@ public class UserController {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Đặt vé thất bại");
        } catch (Exception e) {
            e.printStackTrace();
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Đặt vé thất bại");
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                   .body(e.getMessage());
        }
    }
 
