@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "../../css/user/viewBooking.css"
+import {useState} from "react";
 import HeaderComponent from "../homePage/HeaderComponent";
 import FooterComponent from "../homePage/FooterComponent";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -8,21 +9,35 @@ const ViewBookingComponent = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const {ticketData} = location.state || {};
-    console.log(ticketData)
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+        return () => clearTimeout(timer);
+    }, [])
 
     if (!ticketData) {
         navigate('/');
-        return null;
+        return;
     }
 
     const handlePayment = () => {
-        navigate("/payment-vnpay", { state: { ticketData } });
+        navigate("/payment-vnpay", {state: {ticketData}});
     };
 
     const handlePayLater = () => {
         navigate('/');
     };
-
+    if (loading) {
+        return (
+            <div className="booking-loading-overlay">
+                <div className="booking-loading-spinner"></div>
+                <p className="booking-loading-text">Đang tải vé xem phim...</p>
+            </div>
+        );
+    }
     return (
         <>
             <div className="hero-movie">

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineBook - Book Movie Tickets Online</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0f172a;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(to right, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .movie-card:hover {
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .seat {
+      width: 30px;
+      height: 30px;
+      margin: 5px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .seat.selected {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    .seat.occupied {
+      background-color: #64748b;
+      color: white;
+      cursor: not-allowed;
+    }
+
+    .seat.available {
+      background-color: #e2e8f0;
+      color: #334155;
+    }
+
+    .seat.vip {
+      background-color: #f59e0b;
+      color: white;
+    }
+  </style>
+</head>
+<body class="text-gray-100">
+<!-- Navigation -->
+<nav class="bg-gray-900 py-4 px-6 sticky top-0 z-50 shadow-lg">
+  <div class="container mx-auto flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+      <i class="fas fa-film text-blue-400 text-2xl"></i>
+      <h1 class="text-2xl font-bold text-blue-400">Cine<span class="text-white">Book</span></h1>
+    </div>
+    <div class="hidden md:flex space-x-8">
+      <a href="#" class="text-white hover:text-blue-400 transition">Home</a>
+      <a href="#" class="text-gray-400 hover:text-blue-400 transition">Movies</a>
+      <a href="#" class="text-gray-400 hover:text-blue-400 transition">Cinemas</a>
+      <a href="#" class="text-gray-400 hover:text-blue-400 transition">Offers</a>
+      <a href="#" class="text-gray-400 hover:text-blue-400 transition">Contact</a>
+    </div>
+    <div class="flex items-center space-x-4">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
+        Sign In
+      </button>
+      <button class="md:hidden text-white">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-gradient py-20 px-6">
+  <div class="container mx-auto flex flex-col md:flex-row items-center">
+    <div class="md:w-1/2 mb-10 md:mb-0">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">Book Your Movie Tickets <span class="text-blue-400">Online</span></h1>
+      <p class="text-gray-300 mb-8 text-lg">Discover the latest blockbusters and book your seats in just a few clicks. No queues, no hassle!</p>
+      <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+        <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg font-semibold transition">
+          Browse Movies
+        </button>
+        <button class="bg-transparent border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-6 py-3 rounded-md text-lg font-semibold transition">
+          How It Works
+        </button>
+      </div>
+    </div>
+    <div class="md:w-1/2 flex justify-center">
+      <div class="bg-gray-800 bg-opacity-70 p-6 rounded-xl max-w-md w-full">
+        <h3 class="text-xl font-bold mb-4 text-center">Quick Booking</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-gray-300 mb-2">Select Movie</label>
+            <select class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option>Avengers: Endgame</option>
+              <option>Spider-Man: No Way Home</option>
+              <option>Dune: Part Two</option>
+              <option>Oppenheimer</option>
+              <option>The Batman</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-300 mb-2">Select Cinema</label>
+            <select class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option>Cineplex Downtown</option>
+              <option>MegaPlex West</option>
+              <option>Starlight East</option>
+              <option>Royal Theaters</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-300 mb-2">Select Date</label>
+            <input type="date" class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-semibold transition">
+            Find Showtimes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Now Showing Section -->
+<section class="py-16 px-6 bg-gray-900">
+  <div class="container mx-auto">
+    <div class="flex justify-between items-center mb-10">
+      <h2 class="text-3xl font-bold">Now Showing</h2>
+      <a href="#" class="text-blue-400 hover:text-blue-300 transition">View All</a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <!-- Movie Card 1 -->
+      <div class="movie-card bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+        <div class="relative">
+          <img src="https://m.media-amazon.com/images/M/MV5BMDdmMTBiNTYtMDIzNi00NGVlLWIzMDYtZTk3MTQ3NGQxZGEwXkEyXkFqcGdeQXVyMzMwOTU5MDk@._V1_.jpg" alt="Oppenheimer" class="w-full h-64 object-cover">
+          <div class="absolute top-2 right-2 bg-yellow-500 text-black px-2 py-1 rounded-md text-xs font-bold">
+            IMAX
+          </div>
+        </div>
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-1">Oppenheimer</h3>
+          <div class="flex items-center text-gray-400 text-sm mb-2">
+            <span>R</span>
+            <span class="mx-2">•</span>
+            <span>3h 1m</span>
+            <span class="mx-2">•</span>
+            <span>Biography, Drama</span>
+          </div>
+          <div class="flex items-center mb-4">
+            <i class="fas fa-star text-yellow-400 mr-1"></i>
+            <span>8.6/10</span>
+          </div>
+          <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition">
+            Book Now
+          </button>
+        </div>
+      </div>
+
+      <!-- Movie Card 2 -->
+      <div class="movie-card bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+        <div class="relative">
+          <img src="https://m.media-amazon.com/images/M/MV5BNzQ1ODUzYjktMzRiMS00ODNiLWI4M2MtNzI4YWE2MjYxNTgzXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_FMjpg_UX1000_.jpg" alt="Dune: Part Two" class="w-full h-64 object-cover">
+          <div class="absolute top-2 right-2 bg-purple-500 text-white px-2 py-1 rounded-md text-xs font-bold">
+            3D
+          </div>
+        </div>
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-1">Dune: Part Two</h3>
+          <div class="flex items-center text-gray-400 text-sm mb-2">
+            <span>PG-13</span>
+            <span class="mx-2">•</span>
+            <span>2h 46m</span>
+            <span class="mx-2">•</span>
+            <span>Sci-Fi, Adventure</span>
+          </div>
+          <div class="flex items-center mb-4">
+            <i class="fas fa-star text-yellow-400 mr-1"></i>
+            <span>9.1/10</span>
+          </div>
+          <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition">
+            Book Now
+          </button>
+        </div>
+      </div>
+
+      <!-- Movie Card 3 -->
+      <div class="movie-card bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+        <div class="relative">
+          <img src="https://m.media-amazon.com/images/M/MV5BZWMyYzFjYTYtNTRjYi00OGExLWE2YzgtOGRmYjAxZTU3NzBiXkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_FMjpg_UX1000_.jpg" alt="Spider-Man: Across the Spider-Verse" class="w-full h-64 object-cover">
+          <div class="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 rounded-md text-xs font-bold">
+            4DX
+          </div>
+        </div>
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-1">Spider-Man: Across the Spider-Verse</h3>
+          <div class="flex items-center text-gray-400 text-sm mb-2">
+            <span>PG</span>
+            <span class="mx-2">•</span>
+            <span>2h 20m</span>
+            <span class="mx-2">•</span>
+            <span>Animation, Action</span>
+          </div>
+          <div class="flex items-center mb-4">
+            <i class="fas fa-star text-yellow-400 mr-1"></i>
+            <span>8.9/10</span>
+          </div>
+          <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition">
+            Book Now
+          </button>
+        </div>
+      </div>
+
+      <!-- Movie Card 4 -->
+      <div class="movie-card bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+        <div class="relative">
+          <img src="https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_FMjpg_UX1000_.jpg" alt="The Batman" class="w-full h-64 object-cover">
+          <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-bold">
+            DOLBY
+          </div>
+        </div>
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-1">The Batman</h3>
+          <div class="flex items-center text-gray-400 text-sm mb-2">
+            <span>PG-13</span>
+            <span class="mx-2">•</span>
+            <span>2h 56m</span>
+            <span class="mx-2">•</span>
+            <span>Action, Crime</span>
+          </div>
+          <div class="flex items-center mb-4">
+            <i class="fas fa-star text-yellow-400 mr-1"></i>
+            <span>7.9/10</span>
+          </div>
+          <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition">
+            Book Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Coming Soon Section -->
+<section class="py-16 px-6 bg-gray-800">
+  <div class="container mx-auto">
+    <div class="flex justify-between items-center mb-10">
+      <h2 class="text-3xl font-bold">Coming Soon</h2>
+      <a href="#" class="text-blue-400 hover:text-blue-300 transition">View All</a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <!-- Coming Soon Card 1 -->
+      <div class="bg-gray-700 rounded-lg overflow-hidden shadow-lg">
+        <img src="https://m.media-amazon.com/images/M/MV5BZWQ4MDBmNTEtMWY3ZS00YjYwLThjODQtZGI0NGU4Njg3NzY3XkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_.jpg" alt="Furiosa" class="w-full h-64 object-cover">
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-1">Furiosa</h3>
+          <div class="flex items-center text-gray-400 text-sm mb-2">
+            <span>R</span>
+            <span class="mx-2">•</span>
+            <span>Action, Adventure</span>
+          </div>
+          <div class="text-blue-400 text-sm mb-4">
+            Coming May 24, 2024
+          </div>
+          <button class="w-full bg-transparent border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white py-2 rounded-md transition">
+            Notify Me
+          </button>
+        </div>
+      </div>
+
+      <!-- Coming Soon Card 2 -->
+      <div class="bg-gray-700 rounded-lg overflow-hidden shadow-lg">
+        <img src="https://m.media-amazon.com/images/M/MV5BMTYzODQ5MzY1OV5BMl5BanBnXkFtZTcwNzYzMDE3Nw@@._V1_.jpg" alt="Deadpool & Wolverine" class="w-full h-64 object-cover">
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-1">Deadpool & Wolverine</h3>
+          <div class="flex items-center text-gray-400 text-sm mb-2">
+            <span>R</span>
+            <span class="mx-2">•</span>
+            <span>Action, Comedy</span>
+          </div>
+          <div class="text-blue-400 text-sm mb-4">
+            Coming July 26, 2024
+          </div>
+          <button class="w-full bg-transparent border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white py-2 rounded-md transition">
+            Notify Me
+          </button>
+        </div>
+      </div>
+
+      <!-- Coming Soon Card 3 -->
+      <div class="bg-gray-700 rounded-lg overflow-hidden shadow-lg">
+        <img src="https://m.media-amazon.com/images/M/MV5BZWI4ZTgwMzktNTA3ZS00ODhlLThlYTItN2UxODY4NTU3ZTIxXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_FMjpg_UX1000_.jpg" alt="Joker: Folie à Deux" class="w-full h-64 object-cover">
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-1">Joker: Folie à Deux</h3>
+          <div class="flex items-center text-gray-400 text-sm mb-2">
+            <span>R</span>
+            <span class="mx-2">•</span>
+            <span>Crime, Drama</span>
+          </div>
+          <div class="text-blue-400 text-sm mb-4">
+            Coming October 4, 2024
+          </div>
+          <button class="w-full bg-transparent border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white py-2 rounded-md transition">
+            Notify Me
+          </button>
+        </div>
+      </div>
+
+      <!-- Coming Soon Card 4 -->
+      <div class="bg-gray-700 rounded-lg overflow-hidden shadow-lg">
+        <img src="https://m.media-amazon.com/images/M/MV5BZTU2Y2EzY2EtZmQ2Ni00MTM0LTg4MWQtODMyMzg1NGQ4ZWI5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_FMjpg_UX1000_.jpg" alt="Kraven the Hunter" class="w-full h-64 object-cover">
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-1">Kraven the Hunter</h3>
+          <div class="flex items-center text-gray-400 text-sm mb-2">
+            <span>R</span>
+            <span class="mx-2">•</span>
+            <span>Action, Adventure</span>
+          </div>
+          <div class="text-blue-400 text-sm mb-4">
+            Coming August 30, 2024
+          </div>
+          <button class="w-full bg-transparent border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white py-2 rounded-md transition">
+            Notify Me
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-16 px-6 bg-gray-900">
+  <div class="container mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Step 1 -->
+      <div class="bg-gray-800 p-6 rounded-lg text-center">
+        <div class="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl font-bold">1</span>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Choose Your Movie</h3>
+        <p class="text-gray-400">Browse our extensive collection of movies and select your favorite. Check ratings, trailers, and showtimes.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="bg-gray-800 p-6 rounded-lg text-center">
+        <div class="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl font-bold">2</span>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Pick Seats & Buy Tickets</h3>
+        <p class="text-gray-400">Select your preferred seats using our interactive seat map. Choose from standard, VIP, or premium options.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="bg-gray-800 p-6 rounded-lg text-center">
+        <div class="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl font-bold">3</span>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Enjoy Your Movie</h3>
+        <p class="text-gray-400">Receive e-tickets via email or SMS. Present them at the cinema entrance and enjoy your movie experience!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-16 px-6 bg-gray-800">
+  <div class="container mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Testimonial 1 -->
+      <div class="bg-gray-700 p-6 rounded-lg">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-xl font-bold mr-4">JS</div>
+          <div>
+            <h4 class="font-semibold">John Smith</h4>
+            <div class="flex text-yellow-400">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="text-gray-300">"The booking process was incredibly smooth. I got my tickets instantly and could choose my exact seats. Will definitely use CineBook again!"</p>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="bg-gray-700 p-6 rounded-lg">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-xl font-bold mr-4">MJ</div>
+          <div>
+            <h4 class="font-semibold">Maria Johnson</h4>
+            <div class="flex text-yellow-400">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+        </div>
+        <p class="text-gray-300">"Love the convenience of booking from home. The seat selection feature is fantastic - no more guessing which seats are available!"</p>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="bg-gray-700 p-6 rounded-lg">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-xl font-bold mr-4">DR</div>
+          <div>
+            <h4 class="font-semibold">David Rodriguez</h4>
+            <div class="flex text-yellow-400">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="text-gray-300">"The app notified me when my favorite movie was available for booking. Got great seats for opening night without any hassle!"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 py-12 px-6">
+  <div class="container mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <div class="flex items-center space-x-2 mb-4">
+          <i class="fas fa-film text-blue-400 text-2xl"></i>
+          <h1 class="text-2xl font-bold text-blue-400">Cine<span class="text-white">Book</span></h1>
+        </div>
+        <p class="text-gray-400 mb-4">Your one-stop destination for booking movie tickets online. Skip the lines, enjoy the show!</p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">Home</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">Movies</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">Cinemas</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">Offers</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Information</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">About Us</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">Terms & Conditions</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">Privacy Policy</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">FAQ</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">Help Center</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+        <p class="text-gray-400 mb-4">Subscribe to get updates on new movies and special offers.</p>
+        <div class="flex">
+          <input type="email" placeholder="Your Email" class="bg-gray-800 text-white px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+          <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r-md transition">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+      <p>&copy; 2023 CineBook. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Seat Selection Modal (Hidden by default) -->
+<div id="seatModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+  <div class="bg-gray-800 rounded-lg p-6 max-w-4xl w-full max-h-screen overflow-y-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-xl font-bold">Select Your Seats</h3>
+      <button id="closeModal" class="text-gray-400 hover:text-white">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="mb-6">
+      <div class="flex justify-between mb-4">
+        <div>
+          <h4 class="font-semibold">Avengers: Endgame</h4>
+          <p class="text-gray-400">Cineplex Downtown • May 15, 2023 • 7:30 PM</p>
+        </div>
+        <div class="text-blue-400 font-semibold">Screen 5</div>
+      </div>
+
+      <div class="bg-gray-700 h-2 w-full rounded-md mb-8"></div>
+
+      <div class="flex justify-center">
+        <div class="grid grid-cols-10 gap-1" id="seatMap">
+          <!-- Seats will be generated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="mt-8 flex justify-center">
+        <div class="flex items-center mr-6">
+          <div class="seat available mr-2"></div>
+          <span class="text-sm">Available</span>
+        </div>
+        <div class="flex items-center mr-6">
+          <div class="seat selected mr-2"></div>
+          <span class="text-sm">Selected</span>
+        </div>
+        <div class="flex items-center mr-6">
+          <div class="seat occupied mr-2"></div>
+          <span class="text-sm">Occupied</span>
+        </div>
+        <div class="flex items-center">
+          <div class="seat vip mr-2"></div>
+          <span class="text-sm">VIP</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gray-700 p-4 rounded-lg mb-6">
+      <h4 class="font-semibold mb-2">Your Selection</h4>
+      <div id="selectedSeats" class="text-gray-300 mb-2">No seats selected</div>
+      <div class="flex justify-between items-center">
+        <div>
+          <span class="text-gray-400">Total:</span>
+          <span id="totalPrice" class="font-bold text-lg ml-2">$0.00</span>
+        </div>
+        <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition">
+          Confirm Booking
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Generate seat map
+  document.addEventListener('DOMContentLoaded', function() {
+    const seatMap = document.getElementById('seatMap');
+    const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    const cols = 10;
+
+    // Create screen label
+    const screenLabel = document.createElement('div');
+    screenLabel.className = 'col-span-10 text-center mb-4 text-gray-400';
+    screenLabel.textContent = 'SCREEN';
+    seatMap.appendChild(screenLabel);
+
+    // Create seats
+    rows.forEach(row => {
+      // Add row label
+      const rowLabel = document.createElement('div');
+      rowLabel.className = 'text-center mr-2 flex items-center justify-center';
+      rowLabel.textContent = row;
+      seatMap.appendChild(rowLabel);
+
+      // Add seats for this row
+      for (let col = 1; col <= cols; col++) {
+        const seat = document.createElement('div');
+        seat.className = 'seat available';
+        seat.dataset.row = row;
+        seat.dataset.col = col;
+        seat.dataset.price = row === 'A' || row === 'B' ? 15 : 12; // VIP rows more expensive
+        seat.textContent = col;
+
+        // Randomly occupy some seats (20% chance)
+        if (Math.random() < 0.2) {
+          seat.classList.remove('available');
+          seat.classList.add('occupied');
+        }
+
+        // Mark first two rows as VIP
+        if (row === 'A' || row === 'B') {
+          seat.classList.remove('available');
+          seat.classList.add('vip');
+        }
+
+        seat.addEventListener('click', function() {
+          if (this.classList.contains('occupied')) return;
+
+          if (this.classList.contains('selected')) {
+            this.classList.remove('selected');
+            this.classList.add('available');
+          } else {
+            this.classList.remove('available');
+            this.classList.add('selected');
+          }
+
+          updateSelectedSeats();
+        });
+
+        seatMap.appendChild(seat);
+      }
+    });
+
+    // Add column numbers at bottom
+    for (let i = 0; i <= cols; i++) {
+      const colLabel = document.createElement('div');
+      colLabel.className = 'text-center text-xs';
+      colLabel.textContent = i === 0 ? '' : i;
+      seatMap.appendChild(colLabel);
+    }
+
+    // Book Now buttons functionality
+    const bookNowButtons = document.querySelectorAll('.movie-card button');
+    bookNowButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        document.getElementById('seatModal').classList.remove('hidden');
+      });
+    });
+
+    // Close modal button
+    document.getElementById('closeModal').addEventListener('click', function() {
+      document.getElementById('seatModal').classList.add('hidden');
+    });
+
+    // Update selected seats display
+    function updateSelectedSeats() {
+      const selectedSeats = document.querySelectorAll('.seat.selected');
+      const selectedSeatsDisplay = document.getElementById('selectedSeats');
+      const totalPriceElement = document.getElementById('totalPrice');
+
+      if (selectedSeats.length === 0) {
+        selectedSeatsDisplay.textContent = 'No seats selected';
+        totalPriceElement.textContent = '$0.00';
+        return;
+      }
+
+      let seatsText = '';
+      let totalPrice = 0;
+
+      selectedSeats.forEach((seat, index) => {
+        const row = seat.dataset.row;
+        const col = seat.dataset.col;
+        const price = parseFloat(seat.dataset.price);
+
+        seatsText += `${row}${col}`;
+        if (index < selectedSeats.length - 1) seatsText += ', ';
+
+        totalPrice += price;
+      });
+
+      selectedSeatsDisplay.textContent = seatsText;
+      totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+    }
+  });
+</script>
+</body>
+</html>

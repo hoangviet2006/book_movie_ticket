@@ -961,3 +961,67 @@ html, body {
 .hero-movie {
     flex: 1;
 }
+
+.how-it-works-section {
+    z-index: 10; /* Đặt z-index cao hơn so với .hero-movie */
+    position: relative;
+    padding: 60px 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px; /* Tăng border-radius */
+    color: #fff;
+    animation: fadeIn 1.2s ease;
+}
+.how-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: white;
+}
+
+.steps-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Giãn đều các thẻ ra hai bên */
+    gap: 3rem; /* Tăng khoảng cách giữa các thẻ */
+    max-width: 1200px; /* Giới hạn nội dung bên trong */
+    margin: 0 auto; /* Căn giữa nội dung */
+}
+.step-card {
+    background-color: #252b35; /* Đã cập nhật màu theo yêu cầu */
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 280px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+    color: #e0e0e0;
+}
+
+.step-card:hover {
+    transform: translateY(-5px);
+}
+
+.step-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #1f3e83;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+}
+
+.how-it-works-section {
+    animation: fadeIn 1.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}

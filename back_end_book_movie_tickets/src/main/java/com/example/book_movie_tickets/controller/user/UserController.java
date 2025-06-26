@@ -43,22 +43,6 @@ public class UserController {
     private BookTicket bookTickets;
 
 
-
-
-
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private ShowService showService;
-    @Autowired
-    private IPromotionRepository promotionRepository;
-    @Autowired
-    private IBookingRepository bookingRepository;
-    @Autowired
-    private ITicketRepository ticketRepository;
-    @Autowired
-    private ISeatRepository seatRepository;
-
     @GetMapping("/profile")
     public ResponseEntity<?> getProfile(Authentication authentication) {
         if (authentication == null) {

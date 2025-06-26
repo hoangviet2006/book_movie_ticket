@@ -88,8 +88,8 @@
 /* === Cart Items Container === */
 .cart-items {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
     gap: 2rem;
-    grid-template-columns: 1fr;
 }
 
 /* === Cart Item Card === */
@@ -341,6 +341,34 @@
 
     .cart-item-info {
         font-size: 0.85rem;
+    }
+    .cart-items {
+        grid-template-columns: 1fr; /* Chỉ 1 item mỗi hàng */
+    }
+
+    .cart-item {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .cart-item-poster {
+        width: 100px;
+        height: 150px;
+        margin: 0 auto 1rem auto;
+    }
+
+    .cart-item-title {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .cart-item-info {
+        font-size: 0.85rem;
+    }
+
+    .pay-now-button {
+        width: 100%;
+        text-align: center;
     }
 }
 

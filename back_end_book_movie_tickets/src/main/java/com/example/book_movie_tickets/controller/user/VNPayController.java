@@ -6,6 +6,8 @@ import com.example.book_movie_tickets.model.Booking;
 import com.example.book_movie_tickets.model.Ticket;
 import com.example.book_movie_tickets.repository.IBookingRepository;
 import com.example.book_movie_tickets.repository.ITicketRepository;
+import com.example.book_movie_tickets.service.EmailService;
+import com.example.book_movie_tickets.service.PDFService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import jakarta.servlet.ServletException;
@@ -31,6 +33,10 @@ public class VNPayController {
     private ITicketRepository ticketRepository;
     @Autowired
     private IBookingRepository bookingRepository;
+    @Autowired
+    private PDFService pdfService;
+    @Autowired
+    private EmailService emailService;
     @PostMapping("")
     public ResponseEntity<?> createPayment(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         try {
@@ -196,7 +202,10 @@ public class VNPayController {
                 t.setStatus(Ticket.Status.PAID);
             }
             ticketRepository.saveAll(tickets);
-            message = "Thanh toán thành công";
+            byte[] pdfData = pdfService.generateTicketPdf(tickets);
+            String email=tickets.get(0).getBooking().getUser().getEmail();
+            emailService.sendTicketByEmail(email,pdfData);
+            message = "Thanh toán thành công và vé đã gửi về email";
             response.sendRedirect("http://localhost:3000?status=success&txnRef=" + txnRef +
                                   "&message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
         } else {

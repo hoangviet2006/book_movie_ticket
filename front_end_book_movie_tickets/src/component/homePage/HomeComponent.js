@@ -11,7 +11,7 @@ import {toast} from "react-toastify";
 
 const HomeComponent = () => {
     const [movie, setMovie] = useState([]);
-    const { search } = useLocation()
+    const {search} = useLocation()
     const queryParams = new URLSearchParams(search);
     const message = queryParams.get('message');
     const status = queryParams.get('status');
@@ -31,7 +31,7 @@ const HomeComponent = () => {
             }
         }
         fetchData();
-    }, [message,status]);
+    }, [message, status]);
     const formatPrice = (price) => {
         const num = Number(price);
         if (isNaN(num)) return '0 ₫'; // hoặc "Liên hệ"
@@ -54,7 +54,6 @@ const HomeComponent = () => {
             duration={400}
         >
             {message && <div className={status === 'success' ? 'text-green-600' : 'text-red-600'}>
-              
             </div>}
             <div className="page-container">
                 <div className="hero-movie">
@@ -140,12 +139,32 @@ const HomeComponent = () => {
                             </Link>
                         ))}
                     </div>
-
+                    <div className="how-it-works-section">
+                        <h2 className="how-title">Nó hoạt động như thế nào</h2>
+                        <div className="steps-container">
+                            <div className="step-card">
+                                <div className="step-icon">1</div>
+                                <h3>Chọn phim của bạn</h3>
+                                <p>Duyệt bộ sưu tập phim phong phú của chúng tôi và chọn phim yêu thích của bạn. Kiểm
+                                    tra xếp hạng, đoạn giới thiệu và thời gian chiếu.</p>
+                            </div>
+                            <div className="step-card">
+                                <div className="step-icon">2</div>
+                                <h3>Chọn chỗ ngồi và mua vé</h3>
+                                <p>Chọn chỗ ngồi ưu thích bằng bản đồ chỗ ngồi tương tác của chúng tôi.</p>
+                            </div>
+                            <div className="step-card">
+                                <div className="step-icon">3</div>
+                                <h3>Thưởng thức bộ phim của bạn</h3>
+                                <p>Nhận vé qua email . Xuất trình tại lối vào rạp và tận hưởng trải nghiệm xem
+                                    phim tuyệt vời!</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {/*<SplashCursor/>*/}
                 <FooterComponent/>
             </div>
-
         </ClickSpark>
     );
 }

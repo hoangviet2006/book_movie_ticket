@@ -41,6 +41,12 @@ public interface ICartRepository extends JpaRepository<Booking,Integer> {
                    "join user u on u.id=b.user_id\n" +
                    "where u.username=?1\n" +
                    "and t.status != 'CANCELLED'\n" +
-                   "group by b.id ",nativeQuery = true)
+                   "group by b.id \n" +
+                   "order by case\n" +
+                   "when b.status='UNPAID' then 0 \n" + // 0 hiển thị trước
+                   "when b.status='PAID' then 1\n" +    // 1 hiển thị sau
+                   "else 2\n" +                         // else 2 là các trường hợp khác
+                   "end,\n" +                           // kết thúc case
+                   "b.id desc",nativeQuery = true)
     List<CartDto> findCartByUserName(String username);
 }

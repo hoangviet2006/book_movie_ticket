@@ -28,7 +28,7 @@ const BookingTicketComponent = () => {
         } catch (e) {
             console.log("Lỗi: " + e)
         } finally {
-            setLoading(false)
+            setTimeout(() => setLoading(false), 2000);
         }
 
     }, [confirmIdSeat]);
@@ -83,7 +83,15 @@ const BookingTicketComponent = () => {
         }
     }
     const {handleSendSelectSeat} = useSeatWebSocket(handleWebSocketSelectSeat)
-    if (loading) return <div style={{color: "white", padding: "2rem"}}>Đang tải dữ liệu...</div>;
+
+    if (loading) {
+        return (
+            <div className="booking-loading-overlay">
+                <div className="booking-loading-spinner"></div>
+                <p className="booking-loading-text">Đang tải thông tin suất chiếu...</p>
+            </div>
+        );
+    }
     if (!data) return <div style={{color: "white", padding: "2rem"}}>Không tìm thấy suất chiếu</div>;
     return (
         <>
