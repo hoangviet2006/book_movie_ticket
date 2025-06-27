@@ -105,10 +105,9 @@ const GetAllCinemaComponent = () => {
                         ))
                     ) : (
                         <tr>
-
-                            <div className="no-data-message">
-                                <td colSpan="3">Không có dữ liệu</td>
-                            </div>
+                            <td colSpan="4  " style={{textAlign: 'center', padding: '1rem'}}>
+                                Không có dữ liệu.
+                            </td>
                         </tr>
                     )}
                     </tbody>

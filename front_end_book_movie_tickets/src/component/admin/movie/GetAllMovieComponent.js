@@ -75,26 +75,29 @@ const GetAllMovieComponent = () => {
                     </div>
                 </Form>
             </Formik>
-            {movie && movie.length === 0 ? (
-                <div className="no-data-message">
-                    <p>Không có dữ liệu phim nào được tìm thấy.</p>
-                </div>
-            ) : (
-                <div className="movies-table-container">
-                    <table className="movies-table" style={{overflowX: "hidden"}}>
-                        <thead>
+
+            <div className="movies-table-container">
+                <table className="movies-table" style={{overflowX: "hidden"}}>
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên phim</th>
+                        <th>Mô tả</th>
+                        <th>Thể loại</th>
+                        <th>Thời lượng (phút)</th>
+                        <th>Ngày phát hành</th>
+                        <th>Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {movie && movie.length === 0 ? (
                         <tr>
-                            <th>STT</th>
-                            <th>Tên phim</th>
-                            <th>Mô tả</th>
-                            <th>Thể loại</th>
-                            <th>Thời lượng (phút)</th>
-                            <th>Ngày phát hành</th>
-                            <th>Hành động</th>
+                            <td colSpan="5" style={{textAlign: 'center', padding: '1rem'}}>
+                                Không có dữ liệu.
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {movie && movie.map((m, index) => (
+                    ) : (
+                        movie && movie.map((m, index) => (
                             <tr key={m.id}>
                                 <td>{index + 1}</td>
                                 <td title={m.title} style={{cursor: 'pointer'}}>{m.title}</td>
@@ -112,12 +115,10 @@ const GetAllMovieComponent = () => {
 
                                 </td>
                             </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
-
+                        )))}
+                    </tbody>
+                </table>
+            </div>
             {isShowModal && (
                 <div className="modal-overlay">
                     <div className="custom-modal">

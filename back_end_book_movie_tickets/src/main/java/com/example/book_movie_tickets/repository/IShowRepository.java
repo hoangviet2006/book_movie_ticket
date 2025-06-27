@@ -177,7 +177,7 @@ public interface IShowRepository extends JpaRepository<Shows, Integer> {
     List<ResponseDisplayShowForUser> findAllMovieShowsForDisplay();
 
     // detail show
-    @Query(value = "  select sh.id as idShow,\n" +
+    @Query(value = "  select  sh.id as idShow,\n" +
                    "  sh.date_show as dateShow,\n" +
                    "  sh.start_time as startTime,\n" +
                    "  sh.end_time as endTime,\n" +

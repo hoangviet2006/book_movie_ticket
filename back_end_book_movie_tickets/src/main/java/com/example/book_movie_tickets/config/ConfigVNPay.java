@@ -12,7 +12,7 @@ public class ConfigVNPay {
     public static String vnp_TmnCode = "P05OHVKY"; // Mã định danh website  với VNPay do VNPay cung cấp
     public static String vnp_HashSecret = "JL2M9BBVJ1POMMHDI8B15ZHOJQ8NE50T"; // Mã bí mật để tạo chữ ký bảo mật VNPay cung cấp
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";// URL thanh toán của VNPay
-    public static String vnp_Returnurl = "http://localhost:8080/api/payment/vnpay/vnpay-return"; //URL mà VNPay sẽ gọi lại sau khi thanh toán xong.
+    public static String vnp_Returnurl = "http://10.10.8.24:8080/api/payment/vnpay/vnpay-return"; //URL mà VNPay sẽ gọi lại sau khi thanh toán xong.
 
     public static String getRandomNumber(int len) {  // hàm tạo mã giao dịch ngẫu nhiên
         String chars = "0123456789";

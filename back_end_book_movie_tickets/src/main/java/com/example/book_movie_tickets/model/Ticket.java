@@ -21,6 +21,7 @@ public class Ticket {
     private int id;
     private double price;
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     private Status status=Status.UNPAID;
     public enum Status{
         PAID,

@@ -19,9 +19,6 @@ create table movie(
   poster_url varchar(255),
   release_date date
 ); 
-ALTER TABLE movie
-MODIFY COLUMN description TEXT,
-MODIFY COLUMN poster_url TEXT;
 create table cinema(
   id int primary key auto_increment,
   name varchar(255),
@@ -71,7 +68,6 @@ create table booking(
 id int primary key auto_increment,
 total_price double,
 status varchar(255),
-payment_time datetime,
 soft_delete boolean default  false,
 user_id int,
 show_id int,
@@ -86,11 +82,13 @@ create table ticket(
 id int primary key auto_increment,
 price double,
 status varchar(255),
+book_ticket_time datetime,
 booking_id int,
 seat_id int,
 foreign key(booking_id) references booking(id),
 foreign key(seat_id) references seat(id)
 );
+SHOW COLUMNS FROM ticket WHERE Field = 'status';
 create table otp_code (
 id int primary key auto_increment,
 email VARCHAR(255) NOT NULL,
@@ -100,44 +98,18 @@ password varchar(255),
 created_at datetime,
 expired_at datetime
 );
-insert into movie (title, description, duration, genre, price, poster_url, release_date) values
-('Avengers: Endgame', 'Marvel superhero epic', 181, 'Action', 120000, 'https://example.com/avengers.jpg', '2019-04-26'),
-('Inception', 'Dreams within dreams', 148, 'Sci-Fi', 100000, 'https://example.com/inception.jpg', '2010-07-16'),
-('Interstellar', 'Space and time adventure', 169, 'Sci-Fi', 110000, 'https://example.com/interstellar.jpg', '2014-11-07'),
-('Parasite', 'Thrilling Korean drama', 132, 'Drama', 90000, 'https://example.com/parasite.jpg', '2019-05-30'),
-('The Dark Knight', 'Batman vs Joker', 152, 'Action', 95000, 'https://example.com/darkknight.jpg', '2008-07-18');
-insert into cinema (name, address) values
-('CGV Nguyễn Trãi', '123 Nguyễn Trãi, Hà Nội'),
-('Galaxy Nguyễn Du', '456 Nguyễn Du, TP.HCM'),
-('Lotte Cộng Hòa', '789 Cộng Hòa, TP.HCM');
-insert into promotion (code, start_time, end_time) values
-('SUMMER2025', '2025-06-01 00:00:00', '2025-06-30 23:59:59'),
-('NEWUSER', '2025-01-01 00:00:00', '2025-12-31 23:59:59'),
-('WEEKEND50', '2025-06-21 00:00:00', '2025-06-23 23:59:59');
-insert into payment (status, payment_method) values
-('PAID', 'Credit Card'),
-('PENDING', 'Momo'),
-('FAILED', 'ZaloPay'),
-('PAID', 'Cash');
-insert into booking (booking_time, total_price, status, payment_time, user_id, show_id, promotion_id, payment_id) values
-('2025-06-20 15:00:00', 240000, 'CONFIRMED', '2025-06-20 15:01:00', 2, 1, 1, 1),
-('2025-06-20 16:00:00', 180000, 'PENDING', '2025-06-20 15:01:00', 2, 2, 2, 2),
-('2025-06-21 12:00:00', 120000, 'CANCELLED', '2025-06-20 15:01:00', 2, 3, null, 3),
-('2025-06-21 13:30:00', 300000, 'CONFIRMED', '2025-06-21 13:31:00', 2, 3, 3, 4),
-('2025-06-22 10:00:00', 150000, 'CONFIRMED', '2025-06-22 10:01:00', 2, 2, null, 1),
-('2025-06-23 11:30:00', 200000, 'PENDING', '2025-06-20 15:01:00', 2, 1, 1, 2),
-('2025-06-24 12:45:00', 175000, 'CONFIRMED', '2025-06-24 12:46:00', 2, 1, 2, 1),
-('2025-06-25 14:00:00', 160000, 'CONFIRMED', '2025-06-25 14:01:00', 2, 2, null, 4);
-insert into ticket (price, status, booking_id, seat_id) values
-(120000, 'PAID', 33, 1),
-(120000, 'PAID', 34, 2),
-(90000, 'UNPAID', 35, 6),
-(90000, 'PAID', 36, 7),
-(120000, 'PAID', 37, 11),
-(100000, 'PAID', 38, 16),
-(100000, 'PAID', 39, 17),
-(100000, 'PAID', 40, 18);
-
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE ticket;
+TRUNCATE TABLE booking;
+TRUNCATE TABLE payment;
+TRUNCATE TABLE promotion;
+TRUNCATE TABLE shows;
+TRUNCATE TABLE seat;
+TRUNCATE TABLE room;
+TRUNCATE TABLE cinema;
+TRUNCATE TABLE user;
+TRUNCATE TABLE otp_code;
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- select * from seat s join room r on r.id=s.room_id where r.id=1;
 -- select COUNT(*) from movie m where m.soft_delete = false and m.title="" and m.release_date=?;
@@ -243,8 +215,9 @@ insert into ticket (price, status, booking_id, seat_id) values
 --     and m.soft_delete=false 
 --     and r.soft_delete=false 
 --     and sh.id=14;
-    select sh.id as idShow,
-                     sh.date_show as dateShow,
+                         -- detail show
+                       select sh.id as idShow,
+                       sh.date_show as dateShow,
                        sh.start_time as startTime,
                        sh.end_time as endTime,
                        m.title as titleMovie,
@@ -271,4 +244,43 @@ insert into ticket (price, status, booking_id, seat_id) values
                        and m.soft_delete=false 
 					   and r.soft_delete=false
                        and c.soft_delete=false
-                       and sh.id=1
+                       and sh.id=1;
+                       -- giỏ hàng
+select b.id as idBookig,
+      group_concat(distinct t.id) as idTicket,
+      group_concat(t.price) as ticketPrice,
+       b.status as statusBooking,
+       b.total_price as totalPrice,
+       MAX(t.book_ticket_time) as bookTicketTime,
+       s.date_show as dateShow,
+       s.start_time as startTime,
+       s.end_time as endTime,
+       r.name as nameRoom,
+       c.name as nameCinema,
+       c.address as addressCinema,
+       m.title as titleMovie,
+       m.description as descriptionMovie,
+       m.duration as durationMovie,
+       m.genre as genreMovie,
+       m.poster_url as posterUrl,
+       group_concat( distinct se.seat_code) as seatCode,
+       s.id as idShow,
+       group_concat(distinct se.id)as seatId,
+       max(t.status) as statusTicket
+from booking b 
+join ticket t on t.booking_id=b.id
+join shows s on s.id=b.show_id
+join room r on r.id=s.room_id
+join movie m on m.id=s.movie_id
+join cinema c on c.id=r.cinema_id
+join seat se on se.id=t.seat_id
+join user u on u.id=b.user_id
+where u.username="hoangviet"
+group by b.id 
+order by case
+when b.status="UNPAID" then 0 
+when b.status="PAID" then 1
+when b.status="CANCELLED" then 2
+else 2
+end,
+ b.id desc;

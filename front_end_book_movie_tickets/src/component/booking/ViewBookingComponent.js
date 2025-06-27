@@ -59,7 +59,12 @@ const ViewBookingComponent = () => {
                                 <p><strong>💰 Tổng
                                     tiền:</strong> {(ticketData.price * ticketData.listSeatCode.length).toLocaleString()} VND
                                 </p>
-
+                                <div className="payment-warning">
+                                    <p>
+                                        <strong>⏰ Lưu ý:</strong> Bạn phải <span className="highlight">thanh toán trong vòng 15 phút</span>.
+                                        Sau 15 phút kể từ khi đặt vé, nếu chưa thanh toán, <span className="danger">vé sẽ bị huỷ tự động</span>.
+                                    </p>
+                                </div>
                                 <div className="ticket-actions">
                                     <button className="pay-btn" onClick={handlePayment}>Thanh toán</button>
                                     <button className="later-btn" onClick={handlePayLater}>Thanh toán sau</button>

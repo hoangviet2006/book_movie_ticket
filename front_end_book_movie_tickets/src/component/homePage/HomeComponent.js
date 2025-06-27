@@ -70,15 +70,37 @@ const HomeComponent = () => {
                                  alt="Inception"/>
                             <img src="https://image.tmdb.org/t/p/w500/oRvMaJOmapypFUcQqpgHMZA6qL9.jpg"
                                  alt="The Dark Knight"/>
-                            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401"
-                                 alt="The Dark Knight"/>
+                            <img
+                                src="https://th.bing.com/th/id/R.54126a728f4110eed30453acbf529ac9?rik=he1vICf47uQ2OQ&pid=ImgRaw&r=0"
+                                alt="Monkey King: Hero Is Back"/>
                             <img src="https://images.unsplash.com/photo-1517602302552-471fe67acf66"
                                  alt="The Dark Knight"/>
                             <img
                                 src="https://th.bing.com/th/id/R.0885f18015f3780830ae1c138103c9b3?rik=aLCJuBfpDz%2bIOA&pid=ImgRaw&r=0"
-                                alt="The Dark Knight"/>
+                                alt="Avengers: Endgame"/>
+                            <img
+                                src="https://www.themoviedb.org/t/p/original/4BeWNciB0UHTBeSKF42nbteaTXM.jpg"
+                                alt="Dahufa "/>
+                            <img
+                                src="https://live.staticflickr.com/7927/46604301952_2ac9f1c889.jpg"
+                                alt="Huyền Thoại La Tiểu Hắc"/>
+                            <img
+                                src="https://m.media-amazon.com/images/M/MV5BYmRlODVlZDAtNzcxOC00N2U2LWE4MmQtZTYzZjg3Yjg1MzUxXkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg"
+                                alt="Natra Ma Đồng Náo Hải"/>
+                            <img
+                                src="https://obj.shine.cn/files/2025/03/06/ea1368bc-10b1-46d4-b9b2-09bc9678aa15_0.jpg"
+                                alt="Natra Ma Đồng Giáng Thế"/>
+
+                            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401"
+                                 alt="The Dark Knight"/>
                         </div>
                     </div>
+                    {movie&&movie.length>0 &&(
+                        <div className="showtime-announcement">
+                            Các suất chiếu hiện đang có trong hệ thống. Hãy chọn phim yêu thích để đặt vé ngay và
+                            giữ chỗ ngồi đẹp nhất!
+                        </div>
+                    )}
                     <div className="movie-grid">
                         {movie && movie.map((m, i) => (
                             <Link to={`/movie/${m.idMovie}/detail`} style={{cursor: 'pointer', textDecoration: 'none'}}>

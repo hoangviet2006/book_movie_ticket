@@ -38,7 +38,6 @@ function App() {
   return (
     <>
       <ToastContainer/>
-
       <Routes>
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="movie" element={<GetAllMovieComponent />} />

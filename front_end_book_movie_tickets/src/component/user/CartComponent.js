@@ -103,7 +103,7 @@ const CartComponent = () => {
                                         </p>
 
                                         <p className="cart-item-info">
-                                            <strong>Ghế:</strong> {item?.seatCode}
+                                            <strong>Ghế:</strong> <span className="seat-code">{item?.seatCode}</span>
                                         </p>
 
                                         <p className="cart-item-info">
@@ -111,24 +111,21 @@ const CartComponent = () => {
                                             <span
                                                 className="price-highlight"> {item?.totalPrice.toLocaleString()} VNĐ</span>
                                         </p>
-                                        <p className="cart-item-info">
-                                            <strong>Trạng thái:</strong>
-                                            <span
-                                                className={`status-badge ${item?.statusBooking === 'PAID' ? 'status-paid' : 'status-unpaid'}`}>
-                                                {item?.statusBooking === 'PAID' ? (
+                                            <p className="cart-item-info">
+                                                <strong>Trạng thái:</strong>
+                                                {item?.statusTicket === 'PAID' && (
                                                     <span className="status-badge status-paid">Đã thanh toán</span>
-                                                ) : (
-                                                    <>
-                                                        {/*<span*/}
-                                                        {/*    className="status-badge status-unpaid">Chưa thanh toán</span>*/}
-                                                        <button className="pay-now-button" onClick={() =>
-                                                            handlePayment(item)}>
-                                                            Thanh toán ngay
-                                                        </button>
-                                                    </>
                                                 )}
-                                            </span>
-                                        </p>
+                                                {item?.statusTicket === 'UNPAID' && (
+                                                    <button className="pay-now-button"
+                                                            onClick={() => handlePayment(item)}>
+                                                        Thanh toán ngay
+                                                    </button>
+                                                )}
+                                                {item?.statusTicket === 'CANCELLED' && (
+                                                    <span className="status-badge status-cancelled">Ghế đã bị huỷ vì không thanh toán</span>
+                                                )}
+                                            </p>
                                     </div>
                                 </div>
                             ))}

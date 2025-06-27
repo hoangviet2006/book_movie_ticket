@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {getAllShow,deleteShow} from "../../../service/adminService/ShowService";
-import {useNavigate,Link} from "react-router-dom";
+import {getAllShow, deleteShow} from "../../../service/adminService/ShowService";
+import {useNavigate, Link} from "react-router-dom";
 import {toast} from "react-toastify";
 import "../../../css/admin/show/showAdmin.css"
 import dayjs from "dayjs";
+
 const GetAllShowComponent = () => {
     const [show, setShow] = useState([]);
     const [date, setDate] = useState('');
@@ -11,39 +12,40 @@ const GetAllShowComponent = () => {
     const [page, setPage] = useState(0);
     const [totalPage, setTotalPage] = useState(0);
     const [isShowModal, setIsShowModal] = useState(false);
-    const [idDelete,setIdDelete] = useState(null);
-    const [dateDelete,setDateDelete] = useState(null);
-    const [startTimeDelete,setStartTimeDelete] = useState(null);
-    const [endTimeDelete,setEndTimeDelete] = useState(null);
+    const [idDelete, setIdDelete] = useState(null);
+    const [dateDelete, setDateDelete] = useState(null);
+    const [startTimeDelete, setStartTimeDelete] = useState(null);
+    const [endTimeDelete, setEndTimeDelete] = useState(null);
     const navigate = useNavigate();
     useEffect(() => {
-        try {
-            const fetchData = async () => {
-                const {data, totalPage} = await getAllShow(date, time)
+
+        const fetchData = async () => {
+            try {
+                const {data, totalPage} = await getAllShow(page, date, time)
                 console.log(data)
                 setShow(data);
                 setTotalPage(totalPage);
+            } catch (e) {
+                setShow([]);
             }
-            fetchData();
-        } catch (e) {
-            console.log("lỗi khi lấy dữ liệu" + e)
         }
+        fetchData();
     }, [date, time, page, isShowModal]);
-    const handleShowModal =(id,date,startTime,endTime)=>{
-        setIsShowModal((pre)=>!pre);
+    const handleShowModal = (id, date, startTime, endTime) => {
+        setIsShowModal((pre) => !pre);
         setDateDelete(date)
         setStartTimeDelete(startTime)
         setEndTimeDelete(endTime);
         setIdDelete(id)
     }
-    const handleCLoseModal=()=>{
+    const handleCLoseModal = () => {
         setIdDelete(null);
         setDateDelete(null);
         setStartTimeDelete(null);
         setEndTimeDelete(null);
         setIsShowModal(false)
     }
-    const handleDelete = async ()=>{
+    const handleDelete = async () => {
         await deleteShow(idDelete);
         setIsShowModal(false);
         setIdDelete(null);
@@ -70,23 +72,30 @@ const GetAllShowComponent = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {show && show.map((s, i) => (
+                    {show && show.length === 0 ? (
                         <tr>
-                            <td key={s?.id}>{i + 1}</td>
-                            <td>{dayjs(s?.dateShow).format("DD/MM/YYYY")}</td>
-                            <td>{s?.startTime}</td>
-                            <td>{s?.endTime}</td>
-                            <td>{s?.movie?.title}</td>
-                            <td>{s?.room?.name}</td>
-                            <td>
-                                <button onClick={() => handleShowModal(s.id, s.date, s.startTime, s.endTime)}
-                                 className={'delete-btn'}>
-                                    Xoá
-                                </button>
-                                <Link to={'/admin/show/update/'+s.id} className={'edit-btn'}> chỉnh sửa</Link>
+                            <td colSpan="7" style={{textAlign: 'center', padding: '1rem'}}>
+                                Không có dữ liệu.
                             </td>
                         </tr>
-                    ))}
+                    ) : (
+                        show && show.map((s, i) => (
+                            <tr>
+                                <td key={s?.id}>{i + 1}</td>
+                                <td>{dayjs(s?.dateShow).format("DD/MM/YYYY")}</td>
+                                <td>{s?.startTime}</td>
+                                <td>{s?.endTime}</td>
+                                <td>{s?.movie?.title}</td>
+                                <td>{s?.room?.name}</td>
+                                <td>
+                                    <button onClick={() => handleShowModal(s.id, s.date, s.startTime, s.endTime)}
+                                            className={'delete-btn'}>
+                                        Xoá
+                                    </button>
+                                    <Link to={'/admin/show/update/' + s.id} className={'edit-btn'}> chỉnh sửa</Link>
+                                </td>
+                            </tr>
+                        )))}
                     </tbody>
                 </table>
             </div>
@@ -109,8 +118,10 @@ const GetAllShowComponent = () => {
                         </div>
                     </div>
                 </div>
-            )}
+            )
+            }
         </div>
-    );
+    )
+        ;
 }
 export default GetAllShowComponent;

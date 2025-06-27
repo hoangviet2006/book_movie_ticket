@@ -108,7 +108,12 @@
     background: linear-gradient(135deg, #ff9472, #f27093);; /* vàng */
     color: #000;
 }
-
+.status-badge.seat.cancelled {
+    background-color: #a9a9a9;
+    cursor: not-allowed;
+    border: 1px solid #333;
+    color: #fff;
+}
 /* Ghế chưa thanh toán */
 .seat.unpaid {
     background-color: #ffa500; /* cam */

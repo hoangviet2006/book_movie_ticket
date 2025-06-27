@@ -46,7 +46,7 @@ const FooterComponent = () => {
                     </div>
                 </div>
                 <div className="footer-column footer-map">
-                    <h4>📍 Bản đồ rạp</h4>
+                    <h4>📍 Vị trí  rạp</h4>
                     <div className="map-container">
                         <iframe
                             title="Địa chỉ rạp"

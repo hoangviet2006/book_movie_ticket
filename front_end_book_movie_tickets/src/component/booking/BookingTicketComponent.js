@@ -1,4 +1,4 @@
-import {useEffect, useState,useRef} from "react";
+import {useEffect, useState, useRef} from "react";
 import {detailBookingShow} from "../../service/userService/ShowService";
 import {useNavigate, useParams} from "react-router-dom";
 import "../../css/user/bookingPage.css"
@@ -22,7 +22,7 @@ const BookingTicketComponent = () => {
             const fetchData = async () => {
                 const response = await detailBookingShow(id);
                 setData(response);
-                idShowRef.current=response.idShow;
+                idShowRef.current = response.idShow;
             }
             fetchData();
         } catch (e) {
@@ -69,7 +69,7 @@ const BookingTicketComponent = () => {
             setData((pre) => {
                 if (!pre || !pre.seatStatusDto) return pre;
                 const newSeatStatus = pre.seatStatusDto.map(seat => {
-                    if (Number(seat.seatId)=== Number(seatDto.seatId)) {
+                    if (Number(seat.seatId) === Number(seatDto.seatId)) {
                         console.log("Cập nhật trạng thái ghế", seat.seatId, "thành HELD trong show " + data.idShow);
                         return {
                             ...seat,
@@ -130,6 +130,7 @@ const BookingTicketComponent = () => {
                                     seatClass += " selected";
                                 } else if (seat.seatStatus === "HELD") {
                                     seatClass += " disabled";
+
                                 } else {
                                     seatClass += " empty";
                                 }
@@ -184,6 +185,7 @@ const BookingTicketComponent = () => {
             <FooterComponent/>
         </>
 
-    );
+    )
+        ;
 }
 export default BookingTicketComponent;

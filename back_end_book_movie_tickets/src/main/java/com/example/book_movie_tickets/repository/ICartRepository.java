@@ -14,7 +14,7 @@ public interface ICartRepository extends JpaRepository<Booking,Integer> {
     @Query(value = "select b.id as idBooking,\n" +
                    "  group_concat(distinct t.id) as idTicket," +
                    " group_concat(t.price) as ticketPrice," +
-                   "       b.status as statusBooking,\n" +
+//                   "       b.status as statusBooking,\n" +
                    "       b.total_price as totalPrice,\n" +
                    "       max(t.book_ticket_time) as bookTicketTime," +
                    "       s.date_show as dateShow,\n" +
@@ -30,7 +30,8 @@ public interface ICartRepository extends JpaRepository<Booking,Integer> {
                    "       m.poster_url as posterUrl,\n" +
                    "       group_concat(distinct se.seat_code) as seatCode,\n" +
                    "       s.id as idShow,\n" +
-                   "       group_concat(distinct se.id) as seatId \n" +
+                   "       group_concat(distinct se.id) as seatId, \n" +
+                   "       max(t.status) as statusTicket \n" +
                    "from booking b \n" +
                    "join ticket t on t.booking_id=b.id\n" +
                    "join shows s on s.id=b.show_id\n" +
@@ -40,11 +41,12 @@ public interface ICartRepository extends JpaRepository<Booking,Integer> {
                    "join seat se on se.id=t.seat_id\n" +
                    "join user u on u.id=b.user_id\n" +
                    "where u.username=?1\n" +
-                   "and t.status != 'CANCELLED'\n" +
+//                   "and t.status != 'CANCELLED'\n" +
                    "group by b.id \n" +
                    "order by case\n" +
                    "when b.status='UNPAID' then 0 \n" + // 0 hiển thị trước
-                   "when b.status='PAID' then 1\n" +    // 1 hiển thị sau
+                   "when b.status='PAID' then 1\n" + // 1 hiển thị sau
+                   "when b.status='CANCELLED' then 2\n" +
                    "else 2\n" +                         // else 2 là các trường hợp khác
                    "end,\n" +                           // kết thúc case
                    "b.id desc",nativeQuery = true)

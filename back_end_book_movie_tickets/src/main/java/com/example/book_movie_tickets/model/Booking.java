@@ -21,6 +21,7 @@ public class Booking {
     @Column(name = "total_price")
     private double totalPrice;
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     private Status status=Status.UNPAID;
     @Column(name = "soft_delete")
     private boolean softDelete;

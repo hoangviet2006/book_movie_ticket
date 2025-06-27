@@ -189,7 +189,7 @@ public class VNPayController {
         if ("00".equals(allParams.get("vnp_ResponseCode"))) {
             List<Ticket> tickets = ticketRepository.findByTxnRef(txnRef);
             if (tickets.isEmpty()){
-                response.sendRedirect("http://localhost:3000?status=fail&message=+" +
+                response.sendRedirect("http://10.10.8.24:3000/?status=fail&message=+" +
                                       URLEncoder.encode("Không tìm thấy vé",StandardCharsets.UTF_8));
                 return;
             }
@@ -206,11 +206,11 @@ public class VNPayController {
             String email=tickets.get(0).getBooking().getUser().getEmail();
             emailService.sendTicketByEmail(email,pdfData);
             message = "Thanh toán thành công và vé đã gửi về email";
-            response.sendRedirect("http://localhost:3000?status=success&txnRef=" + txnRef +
+            response.sendRedirect("http://10.10.8.24:3000/?status=success&txnRef=" + txnRef +
                                   "&message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
         } else {
             message = "Thanh toán thất bại: Mã " + allParams.get("vnp_ResponseCode");
-            response.sendRedirect("http://localhost:3000?status=fail&txnRef=" + txnRef +
+            response.sendRedirect("http://10.10.8.24:3000/?status=fail&txnRef=" + txnRef +
                                   "&message=" + URLEncoder.encode(message, StandardCharsets.UTF_8));
         }
     }

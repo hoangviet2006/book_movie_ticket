@@ -23,24 +23,50 @@ public class PDFService  {
         BaseFont baseFont = BaseFont.createFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         Font fontTitle  = new Font(baseFont,16,Font.BOLD, BaseColor.BLUE);
         Font fontNormal = new Font(baseFont,12,Font.NORMAL,BaseColor.BLACK);
-        document.add(new Paragraph("Vé xem phim",fontTitle));
-        document.add(new Paragraph(""));
+        Font labelFont = new Font(baseFont, 12, Font.BOLD, BaseColor.DARK_GRAY);
+        Font contentFont = new Font(baseFont, 12, Font.NORMAL, BaseColor.BLACK);
+        Font lineFont = new Font(baseFont, 10, Font.ITALIC, BaseColor.GRAY);
         for (Ticket t:tickets){
             Booking booking = t.getBooking();
             Movie movie = booking.getShows().getMovie();
             Shows shows = booking.getShows();
             Cinema cinema = shows.getRoom().getCinema();
-            document.add(new Paragraph("Phim: "+movie.getTitle(),fontNormal));
-            document.add(new Paragraph("Tên rạp: "+cinema.getName(),fontNormal));
-            document.add(new Paragraph("Địa chỉ: "+cinema.getAddress(),fontNormal));
-            document.add(new Paragraph("Phòng: "+shows.getRoom().getName(),fontNormal));
-            document.add(new Paragraph("Ngày chiếu: "+shows.getDateShow(),fontNormal));
-            document.add(new Paragraph("Giờ chiếu: "+shows.getStartTime()+" - "+shows.getEndTime(),fontNormal));
-            document.add(new Paragraph("Mã ghế: "+t.getSeat().getSeatCode(),fontNormal));
-            document.add(new Paragraph("--------------------------------------------------"));
+            Paragraph header = new Paragraph("MOVIEGO TICKET", fontTitle);
+            header.setAlignment(Element.ALIGN_CENTER);
+            document.add(header);
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("Phim: ",labelFont));
+            document.add(new Paragraph(movie.getTitle(), contentFont));
+            document.add(new Paragraph("Rạp: ",labelFont));
+            document.add(new Paragraph(cinema.getName(),contentFont));
+            document.add(new Paragraph("Địa chỉ: ",labelFont));
+            document.add(new Paragraph(cinema.getAddress(),contentFont));
+            document.add(new Paragraph("Phòng: ",labelFont));
+            document.add(new Paragraph(shows.getRoom().getName(),contentFont));
+            document.add(new Paragraph("Ngày chiếu: ",labelFont));
+            document.add(new Paragraph(String.valueOf(shows.getDateShow()),contentFont));
+            document.add(new Paragraph("Giờ chiếu: ",labelFont));
+            document.add(new Paragraph(shows.getStartTime()+" - "+shows.getEndTime(),contentFont));
+            document.add(new Paragraph("Mã ghế: ",labelFont));
+            document.add(new Paragraph(t.getSeat().getSeatCode(),labelFont));
+            String prPath = "D:\\project_book_movie_tickets\\back_end_book_movie_tickets\\src\\main\\resources\\static\\image\\qrcode_221957765_14e540f7cde8568b1619a4dd6d3ea5ea.png";
+            Image image = Image.getInstance(prPath);
+            image.scaleAbsolute(150,150);
+            float imageWidth = 150;
+            float centerX=(document.getPageSize().getWidth()-imageWidth)/2;
+            float posY =  document.bottom()+70;
+            image.setAbsolutePosition(centerX,posY);
+            document.add(image);
+            Paragraph line = new Paragraph("------------------------------", lineFont);
+            line.setAlignment(Element.ALIGN_CENTER);
+            document.add(new Paragraph(" "));
+            document.add(line);
+            document.add(new Paragraph(" "));
+            if (tickets.indexOf(t) < tickets.size()-1){
+                document.newPage();
+            }
         }
         document.close();
-        System.out.println(document);
         return byteArrayOutputStream.toByteArray();
     }
 }

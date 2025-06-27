@@ -157,7 +157,14 @@
     flex-direction: column;
     gap: 0.8rem;
 }
-
+.cart-item-info .seat-code {
+    display: inline-block;
+    white-space: pre-wrap;       /* Cho phép xuống dòng nếu quá dài */
+    word-break: break-word;      /* Tự ngắt nếu không có dấu cách */
+    max-width: 100%;
+    margin-top: 0.2rem;
+    line-height: 1.6;
+}
 .cart-item-title {
     font-size: 1.5rem;
     font-weight: 700;

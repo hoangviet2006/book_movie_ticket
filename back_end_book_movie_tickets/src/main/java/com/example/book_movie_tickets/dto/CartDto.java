@@ -8,7 +8,7 @@ public interface CartDto {
      Integer getIdBooking();
      String getIdTicket();
      String getTicketPrice();
-     String getStatusBooking();
+//     String getStatusBooking();
     LocalDateTime  getBookTicketTime();
      Double getTotalPrice();
      LocalDate getDateShow();
@@ -25,4 +25,5 @@ public interface CartDto {
      String getSeatCode();
      Integer getIdShow();
      String getSeatId();
+     String getStatusTicket();
 }

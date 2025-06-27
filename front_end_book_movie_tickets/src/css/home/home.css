@@ -483,7 +483,7 @@ html, body {
 .movie-slider {
     width: 100%; /* Chiếm gần hết chiều ngang, trừ 40px padding */
     max-width: none; /* Bỏ giới hạn max-width */
-    margin: 10px 20px 20px; /* Margin trái phải 20px */
+    margin: 10px 0 20px; /* Margin trái phải 20px */
     overflow: hidden;
     border-radius: 12px;
     position: relative;
@@ -497,16 +497,16 @@ html, body {
 
 .slides {
     display: flex;
-    width: 300%; /* Tăng width để có nhiều ảnh hơn */
-    animation: slide 30s linear infinite; /* Tăng thời gian animation */
+    width: 350%; /* Tăng width để có nhiều ảnh hơn */
+    animation: slide 25s linear infinite; /* Tăng thời gian animation */
 
 }
 
 .slides img {
     width: calc(100% / 5); /* Chia cho 5 thay vì 4 để có nhiều ảnh hơn */
-    height: 300px; /* Tăng chiều cao cho phù hợp */
+    height: 350px; /* Tăng chiều cao cho phù hợp */
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
 @keyframes slide {
@@ -660,6 +660,9 @@ html, body {
         display: block;
         color: #fff; /* Ensure text is white for contrast */
     }
+    .slides {
+        animation: slide 10s linear infinite !important;
+    }
 }
 
 @media (max-width: 1200px) {
@@ -736,9 +739,8 @@ html, body {
     }
 
     .slides {
-        animation: slide 25s linear infinite;
+        animation: slide 10s linear infinite;
         max-width: 300px;
-
     }
 
     .movie-card {
@@ -883,6 +885,9 @@ html, body {
     .profile-link:hover span {
         color: #fff; /* Ensure text stays white on hover */
     }
+    body {
+        overflow-x: hidden; /* chống cuộn ngang toàn trang */
+    }
 }
 
 /* === Thêm hiệu ứng hover cho toàn bộ grid === */
@@ -1025,3 +1030,58 @@ html, body {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
 }
+.showtime-announcement {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: 5px solid #ff5e00;
+    padding: 18px 24px;
+    margin: 36px 32px 16px;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(255, 94, 0, 0.15);
+    animation: fadeInSlide 0.8s ease forwards;
+    opacity: 0;
+    z-index: 2;
+}
+
+.showtime-announcement::before {
+    content: "📢";
+    font-size: 22px;
+}
+
+@media (max-width: 768px) {
+    .showtime-announcement {
+        width: 100%;
+        font-size: 13px;
+        padding: 6px 10px;
+        margin: auto;
+        border-radius: 6px;
+        line-height: 1.3;
+        box-shadow: 0 1px 4px rgba(255, 94, 0, 0.1);
+        white-space: normal;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: start;
+    }
+}
+
+
+@keyframes fadeInSlide {
+    0% {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+

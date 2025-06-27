@@ -2,6 +2,7 @@ package com.example.book_movie_tickets.service;
 
 import com.example.book_movie_tickets.config.JwtUtil;
 import com.example.book_movie_tickets.dto.BookingRequest;
+import com.example.book_movie_tickets.dto.TicketMinimal;
 import com.example.book_movie_tickets.model.*;
 import com.example.book_movie_tickets.repository.IBookingRepository;
 import com.example.book_movie_tickets.repository.ISeatRepository;
@@ -11,8 +12,10 @@ import com.example.book_movie_tickets.service.impl.IBookTicket;
 import com.example.book_movie_tickets.service.impl.IPromotionRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class BookTicket implements IBookTicket {
     private ITicketRepository ticketRepository;
     @Autowired
     private ISeatRepository seatRepository;
+
     @Override
     public List<Integer> bookTickets(BookingRequest bookingRequest, HttpServletRequest httpRequest) {
         String authHeader = httpRequest.getHeader("Authorization");
@@ -62,18 +66,19 @@ public class BookTicket implements IBookTicket {
             booking.setTotalPrice(totalPrice);
             bookingRepository.save(booking);
             List<Integer> ticketIds = new ArrayList<>();
-            for (Integer item: bookingRequest.getIdSeats()){
+            for (Integer item : bookingRequest.getIdSeats()) {
                 Optional<Seat> seat = seatRepository.findById(item);
-                if (seat.isPresent()){
-                    int count= ticketRepository.countTicketBySeat(seat.get().getId(),bookingRequest.getIdShow(),user.get().getId());
-                    if (count>=1) {
-                        List<String> seats = ticketRepository.findSeatCodeByTicket(bookingRequest.getIdSeats(),bookingRequest.getIdShow());
+                if (seat.isPresent()) {
+                    ticketRepository.deleteBySeat_IdAndBooking_Shows_IdAndStatus(seat.get().getId(), bookingRequest.getIdShow(), Ticket.Status.CANCELLED);
+                    int count = ticketRepository.countTicketBySeat(seat.get().getId(), bookingRequest.getIdShow(), user.get().getId());
+                    if (count >= 1) {
+                        List<String> seats = ticketRepository.findSeatCodeByTicket(bookingRequest.getIdSeats(), bookingRequest.getIdShow());
                         String seatNames = String.join(", ", seats);
-                        System.out.println("Ghế đã bị đặt: "+seatNames);
+                        System.out.println("Ghế đã bị đặt: " + seatNames);
                         throw new RuntimeException("Ghế: " + seatNames + " đã được đặt bởi người khác. Vui lòng chọn lại.");
                     }
                     Ticket ticket = new Ticket();
-                    double priceTicket = totalPrice/bookingRequest.getIdSeats().size();
+                    double priceTicket = totalPrice / bookingRequest.getIdSeats().size();
                     ticket.setPrice(priceTicket);
                     ticket.setStatus(Ticket.Status.UNPAID);
                     ticket.setBooking(booking);
@@ -87,4 +92,24 @@ public class BookTicket implements IBookTicket {
         }
         return null;
     }
+
+    @Scheduled(fixedRate = 60000) // tương đương 1 phút
+    public void cancelExpiredTickets() {
+        List<TicketMinimal> ticketMinimals = ticketRepository.findTicketOnClose();
+
+        if (!ticketMinimals.isEmpty()) {
+            for (TicketMinimal t : ticketMinimals) {
+                System.out.println(">>> [DEBUG] Kiểm tra vé ID: " + t.getId() + ", thời gian đặt: " + t.getBookTicketTime());
+                if (t.getBookTicketTime() != null && Duration.between(t.getBookTicketTime(), LocalDateTime.now()).toMinutes() > 15) {
+                    Optional<Ticket> ticket = ticketRepository.findById(t.getId());
+                    if (ticket.isPresent()) {
+                        ticket.get().setStatus(Ticket.Status.CANCELLED);
+                        ticketRepository.save(ticket.get());
+                        System.out.println(">>> [DEBUG] Vé ID " + t.getId() + " đã được hủy do hết hạn.");
+                    }
+                }
+            }
+        }
+    }
 }
+

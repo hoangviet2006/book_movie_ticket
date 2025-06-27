@@ -97,7 +97,7 @@ const GetAllRoomComponent = () => {
                         {room && room.length === 0 ? (
                             <tr>
                                 <td colSpan="5" style={{ textAlign: 'center', padding: '1rem' }}>
-                                    Không có dữ liệu phòng chiếu.
+                                    Không có dữ liệu.
                                 </td>
                             </tr>
                         ) : (
