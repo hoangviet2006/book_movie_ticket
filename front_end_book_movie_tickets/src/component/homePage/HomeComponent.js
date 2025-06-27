@@ -15,8 +15,18 @@ const HomeComponent = () => {
     const queryParams = new URLSearchParams(search);
     const message = queryParams.get('message');
     const status = queryParams.get('status');
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [fadeIn, setFadeIn] = useState(true);
+    const [bannerLoaded, setBannerLoaded] = useState(false);
+    const [isTransitioning, setIsTransitioning] = useState(false);
     useEffect(() => {
+        let timeout;
         const fetchData = async () => {
+            setBannerLoaded(true);
+            timeout = setTimeout(() => {
+                setBannerLoaded(true);
+            }, 100);
+
             if (message) {
                 toast[status === 'success' ? 'success' : 'error'](message);
             }
@@ -29,9 +39,30 @@ const HomeComponent = () => {
             } catch (e) {
                 console.error("Lỗi", e);
             }
+
         }
         fetchData();
-    }, [message, status]);
+        setTimeout(() => {
+            setFadeIn(true);
+        }, 100);
+        return () => clearTimeout(timeout);
+    }, [message, status,selectedIndex]);
+    const handleImageTransition = (newIndex, newMovie) => {
+        if (isTransitioning) return;
+
+        setIsTransitioning(true);
+        setFadeIn(false);  // Hide overlay
+
+        setTimeout(() => {
+            setSelectedIndex(newIndex);
+            setSelectedMovie(newMovie);
+
+            setTimeout(() => {
+                setFadeIn(true);   // Show overlay
+                setIsTransitioning(false);
+            }, 50);
+        }, 400); // Wait for image transition
+    };
     const formatPrice = (price) => {
         const num = Number(price);
         if (isNaN(num)) return '0 ₫'; // hoặc "Liên hệ"
@@ -44,6 +75,65 @@ const HomeComponent = () => {
         const today = new Date();
         return today.toISOString().split('T')[0]; // '2025-06-19' chẳng hạn
     };
+    const movieData = [
+        {
+            id: 1,
+            title: "Tiên Nghịch",
+            description: "Một trong những tiểu thuyết tiên hiệp nổi tiếng.",
+            genres: ["Tiên hiệp", "Hành động"],
+            image: "https://cdn-media.sforum.vn/storage/app/media/truyen-cua-nhi-can-1.jpg"
+        },
+        {
+            id: 2,
+            title: "Vùng Đất Linh Hồn",
+            description: "Batman đối đầu Joker trong trận chiến định mệnh.",
+            genres: ["Hoạt hình", "Phiêu lưu"],
+            image: "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/3/image/c5f0a1eff4c394a251036189ccddaacd/s/p/spirited-away---poster-01.jpg"
+        },
+        {
+            id: 3,
+            title: "Monkey King: Hero Is Back",
+            description: "Tôn Ngộ Không tái xuất giang hồ.",
+            genres: ["Hoạt hình", "Phiêu lưu"],
+            image: "https://th.bing.com/th/id/R.54126a728f4110eed30453acbf529ac9?rik=he1vICf47uQ2OQ&pid=ImgRaw&r=0"
+        },
+        {
+            id: 4,
+            title: "Avengers: Endgame",
+            description: "Biệt đội siêu anh hùng đối mặt với Thanos để cứu vũ trụ.",
+            genres: ["Hành động", "Viễn tưởng"],
+            image: "https://th.bing.com/th/id/R.0885f18015f3780830ae1c138103c9b3?rik=aLCJuBfpDz%2bIOA&pid=ImgRaw&r=0"
+        },
+        {
+            id: 5,
+            title: "Dahufa",
+            description: "Một hành trình phiêu lưu trong thế giới kỳ bí.",
+            genres: ["Hoạt hình", "Huyền bí"],
+            image: "https://www.themoviedb.org/t/p/original/4BeWNciB0UHTBeSKF42nbteaTXM.jpg"
+        },
+        {
+            id: 6,
+            title: "Huyền Thoại La Tiểu Hắc",
+            description: "Câu chuyện về chú mèo đen trong thế giới yêu quái.",
+            genres: ["Hoạt hình", "Phiêu lưu"],
+            image: "https://cdn0.fahasa.com/media/flashmagazine/images/page_images/huyen_thoai_la_tieu_hac___tap_1/2021_08_19_08_53_31_1-390x510.jpg"
+        },
+        {
+            id: 7,
+            title: "Natra Ma Đồng Náo Hải",
+            description: "Natra gây náo loạn biển cả trong chuyến phiêu lưu mới.",
+            genres: ["Hoạt hình", "Hài hước"],
+            image: "https://m.media-amazon.com/images/M/MV5BYmRlODVlZDAtNzcxOC00N2U2LWE4MmQtZTYzZjg3Yjg1MzUxXkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg"
+        },
+        {
+            id: 8,
+            title: "Natra Ma Đồng Giáng Thế",
+            description: "Natra tái sinh đối đầu với số phận định sẵn.",
+            genres: ["Hoạt hình", "Hành động"],
+                image: "https://kenh14cdn.com/2019/9/18/photo-1-15688181672871034679544.jpg"
+        }
+    ];
+    const [selectedMovie, setSelectedMovie] = useState(movieData[0]);
 
     return (
         <ClickSpark
@@ -58,11 +148,47 @@ const HomeComponent = () => {
             <div className="page-container">
                 <div className="hero-movie">
                     <HeaderComponent/>
-                    <div className="hero-content">
-                        <h1>Chào mừng bạn đến với MovieGo.vn</h1>
-                        <p>Trải nghiệm điện ảnh tuyệt vời không cần xếp hàng không lo hết chỗ đặt vé ngay để chọn vị trí
-                            ưng ý nhất! Đặt vé xem phim ngay !!!</p>
-                        <button className="btn">Khám phá ngay</button>
+                    <div className={`home-banner ${bannerLoaded ? 'loaded' : ''}`}>
+                        <div className="banner-image-container">
+                            <img
+                                src={movieData[selectedIndex].image}
+                                alt={movieData[selectedIndex].title}
+                                className={`banner-image ${fadeIn ? 'active' : ''}`}
+                            />
+                        </div>
+
+                        <div className={`banner-overlay ${fadeIn ? 'active' : ''}`}>
+                            <h1 className="banner-title">{movieData[selectedIndex].title}</h1>
+                            <p className="banner-description">{movieData[selectedIndex].description}</p>
+                            <div className="banner-tags">
+                                {movieData[selectedIndex].genres.map((genre, index) => (
+                                    <span key={index} className="tag">{genre}</span>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Indicators */}
+                        <div className="banner-indicators">
+                            {movieData.map((_, index) => (
+                                <div
+                                    key={index}
+                                    className={`indicator ${index === selectedIndex ? 'active' : ''}`}
+                                    onClick={() => handleImageTransition(index, movieData[index])}
+                                />
+                            ))}
+                        </div>
+
+                        <div className="thumbnail-container">
+                            {movieData.map((movie, index) => (
+                                <img
+                                    key={movie.id}
+                                    src={movie.image}
+                                    alt={movie.title}
+                                    className={`thumbnail ${index === selectedIndex ? 'active' : ''}`}
+                                    onClick={() => handleImageTransition(index, movie)}
+                                />
+                            ))}
+                        </div>
                     </div>
                     <div className="movie-slider">
                         <div className="slides">
@@ -95,12 +221,6 @@ const HomeComponent = () => {
                                  alt="The Dark Knight"/>
                         </div>
                     </div>
-                    {movie&&movie.length>0 &&(
-                        <div className="showtime-announcement">
-                            Các suất chiếu hiện đang có trong hệ thống. Hãy chọn phim yêu thích để đặt vé ngay và
-                            giữ chỗ ngồi đẹp nhất!
-                        </div>
-                    )}
                     <div className="movie-grid">
                         {movie && movie.map((m, i) => (
                             <Link to={`/movie/${m.idMovie}/detail`} style={{cursor: 'pointer', textDecoration: 'none'}}>

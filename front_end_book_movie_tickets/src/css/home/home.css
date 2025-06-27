@@ -1,6 +1,4 @@
 /* === Reset và Base Styles === */
-
-
 * {
     margin: 0;
     padding: 0;
@@ -22,7 +20,7 @@ html, body {
 
 /* === Background Hero Section === */
 .hero-movie {
-    min-height: 80vh !important;;
+    min-height: 80vh !important;
     width: 100%; /* Đảm bảo chiều rộng full viewport */
     position: relative;
     display: flex;
@@ -81,7 +79,6 @@ html, body {
     text-decoration: none;
 }
 
-
 .logo::after {
     content: "";
     position: absolute;
@@ -127,7 +124,6 @@ html, body {
     transform: scale(1.05);
 }
 
-
 .nav-links span {
     color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
@@ -171,6 +167,7 @@ html, body {
     text-overflow: ellipsis;
     transition: all 0.3s ease;
 }
+
 .profile-link:hover span {
     color: #fff;
     background: rgba(255, 148, 114, 0.2);
@@ -367,7 +364,6 @@ html, body {
 }
 
 /* === Movie Grid - Fixed responsive layout === */
-/* === Movie Grid - Tăng kích thước các khối div phim === */
 .movie-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); /* Tăng minmax để có card lớn hơn */
@@ -429,6 +425,7 @@ html, body {
     margin-bottom: 10px;
     font-weight: 500;
 }
+
 .movie-info {
     display: flex;
     align-items: center;
@@ -468,12 +465,14 @@ html, body {
     font-size: 19px; /* từ 18px → 19px */
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
+
 .book-button {
     font-size: 16px; /* từ 15px → 16px */
     font-weight: 600; /* từ 500 → 600 */
     padding: 11px 22px; /* tăng nhẹ padding */
     box-shadow: 0 4px 20px rgba(255, 148, 114, 0.4); /* tăng độ nổi khối */
 }
+
 .book-button:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(255, 148, 114, 0.4);
@@ -499,7 +498,6 @@ html, body {
     display: flex;
     width: 350%; /* Tăng width để có nhiều ảnh hơn */
     animation: slide 25s linear infinite; /* Tăng thời gian animation */
-
 }
 
 .slides img {
@@ -519,7 +517,344 @@ html, body {
     /* Điều chỉnh theo số lượng ảnh */
 }
 
+/* === Home Banner === */
+.home-banner {
+    position: relative;
+    width: 100vw; /* Use viewport width to ensure full screen width */
+    height: 600px;
+    overflow: hidden;
+    z-index: 2;
+    margin: 0;
+    top: 5px;
+    right: 80px;
+}
 
+/* Container cho việc chuyển đổi ảnh */
+.banner-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Ảnh chính - hiệu ứng slide ngang với fade */
+.banner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+    z-index: 1;
+    opacity: 0; /* Start invisible for fade effect */
+    transform: translateX(100%); /* Default: start from right */
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+}
+.banner-image.from-left {
+    transform: translateX(-100%); /* Start from left for alternate slides */
+}
+
+
+.banner-image.active {
+    opacity: 1; /* Fully visible when active */
+    transform: translateX(0); /* Centered position */
+}
+.banner-image.exiting {
+    opacity: 0; /* Fade out */
+    transform: translateX(-100%); /* Default: exit to left */
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+}
+.banner-image.exiting.to-right {
+    transform: translateX(100%); /* Exit to right for alternate slides */
+}
+
+/* Overlay chữ - hiệu ứng fade + slide nhẹ */
+.banner-overlay {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    color: #fff;
+    z-index: 2;
+    max-width: 600px;
+    backdrop-filter: blur(1.5px);
+    opacity: 0;
+    transform: translateY(-50%) translateX(-20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.banner-overlay.active {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+/* Tiêu đề */
+.banner-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateX(-15px);
+    transition: opacity 0.5s ease-out 0.2s, transform 0.5s ease-out 0.2s;
+}
+
+.banner-overlay.active .banner-title {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Mô tả */
+.banner-description {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.5s ease-out 0.4s, transform 0.5s ease-out 0.4s;
+}
+
+.banner-overlay.active .banner-description {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Tags */
+.banner-tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.5s ease-out 0.6s, transform 0.5s ease-out 0.6s;
+}
+
+.banner-overlay.active .banner-tags {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.tag {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    backdrop-filter: blur(2px);
+    transition: all 0.3s ease;
+}
+
+.tag:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Nút bấm */
+.banner-buttons {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.5s ease-out 0.8s, transform 0.5s ease-out 0.8s;
+}
+
+.banner-overlay.active .banner-buttons {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.banner-buttons button {
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    margin-right: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-btn {
+    background-color: #ff5050;
+    color: white;
+}
+
+.info-btn {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.play-btn:hover {
+    background-color: #ff3030;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 80, 80, 0.4);
+}
+
+.info-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Thumbnails - slide từ phải */
+.thumbnail-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 4;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease-out 0.5s, transform 0.6s ease-out 0.5s;
+}
+
+.home-banner.loaded .thumbnail-container {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.thumbnail {
+    width: 80px;
+    height: 50px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.thumbnail:hover {
+    transform: scale(1.1);
+    opacity: 1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.thumbnail.active {
+    border: 2px solid #ff5050;
+    box-shadow: 0 0 10px rgba(255, 80, 80, 0.5);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Indicators cho slider */
+.banner-indicators {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 4;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: #ff5050;
+    transform: scale(1.2);
+}
+
+.indicator:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* Animation keyframes cho auto-play */
+@keyframes slideIn {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+/* Classes cho JavaScript control */
+.banner-image.slide-in {
+    animation: slideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.banner-image.slide-out {
+    animation: slideOut 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+/* Animation keyframes for auto-play */
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes slideOutToLeft {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideOutToRight {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+.banner-image.slide-in.from-right {
+    animation: slideInFromRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.banner-image.slide-in.from-left {
+    animation: slideInFromLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.banner-image.slide-out.to-left {
+    animation: slideOutToLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.banner-image.slide-out.to-right {
+    animation: slideOutToRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* === Responsive Media Queries === */
 @media (max-width: 768px) {
     .movie-grid {
         max-width: calc(100% - 30px);
@@ -557,7 +892,6 @@ html, body {
         font-size: 17px;
     }
 
-    /* Responsive adjustments for header */
     .glass-header {
         height: 60px;
         padding: 0 3%;
@@ -614,7 +948,7 @@ html, body {
         top: 60px;
         left: 0;
         width: 100%;
-        background: rgba(0, 0, 0, 0.8); /* Darker background for better readability */
+        background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         padding: 1rem 0;
@@ -636,7 +970,7 @@ html, body {
         flex-direction: column;
         width: 100%;
         padding: 0 1rem;
-        background: rgba(0, 0, 0, 0.8); /* Darker background for consistency */
+        background: rgba(0, 0, 0, 0.8);
     }
 
     .user-links.active {
@@ -649,7 +983,7 @@ html, body {
         border-radius: 6px;
         width: 100%;
         text-align: center;
-        color: #fff; /* Ensure text is white for contrast */
+        color: #fff;
     }
 
     .profile-link span {
@@ -658,10 +992,41 @@ html, body {
         max-width: none;
         text-align: center;
         display: block;
-        color: #fff; /* Ensure text is white for contrast */
+        color: #fff;
     }
-    .slides {
-        animation: slide 10s linear infinite !important;
+
+    .home-banner {
+        height: 400px;
+    }
+
+    .banner-overlay {
+        left: 5%;
+        max-width: 90%;
+    }
+
+    .banner-title {
+        font-size: 2rem;
+    }
+
+    .banner-description {
+        font-size: 1rem;
+    }
+
+    .thumbnail-container {
+        bottom: 10px;
+        right: 10px;
+        gap: 5px;
+        padding: 5px;
+        left: 3px;
+    }
+
+    .thumbnail {
+        width: 60px;
+        height: 40px;
+    }
+
+    .banner-indicators {
+        bottom: 40px;
     }
 }
 
@@ -691,14 +1056,14 @@ html, body {
         display: flex;
         gap: 0.5rem;
         margin-left: 0;
-        order: 1; /* Ensure nav-links are on the left */
+        order: 1;
     }
 
     .user-links {
         display: flex;
         gap: 0.5rem;
         margin-right: 0;
-        order: 2; /* Ensure user-links are on the right */
+        order: 2;
     }
 
     .nav-links a, .movie, .profile-link, .logout-link {
@@ -722,7 +1087,6 @@ html, body {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         gap: 14px;
     }
-
 
     .movie-slider {
         width: 100vw;
@@ -865,12 +1229,12 @@ html, body {
     }
 
     .profile-link {
-        background: rgba(255, 148, 114, 0.2); /* Subtle background for profile link */
+        background: rgba(255, 148, 114, 0.2);
         transition: background 0.3s ease;
     }
 
     .profile-link:hover {
-        background: rgba(255, 148, 114, 0.4); /* Darker background on hover */
+        background: rgba(255, 148, 114, 0.4);
     }
 
     .profile-link span {
@@ -883,10 +1247,7 @@ html, body {
     }
 
     .profile-link:hover span {
-        color: #fff; /* Ensure text stays white on hover */
-    }
-    body {
-        overflow-x: hidden; /* chống cuộn ngang toàn trang */
+        color: #fff;
     }
 }
 
@@ -907,7 +1268,6 @@ html, body {
 .movie-slider,
 .slides {
     will-change: transform;
-
 }
 
 /* === Smooth Scrolling === */
@@ -951,6 +1311,7 @@ html {
     background: linear-gradient(45deg, #f2709c, #ff9472);
     color: white;
 }
+
 html, body {
     height: 100%;
     margin: 0;
@@ -968,17 +1329,18 @@ html, body {
 }
 
 .how-it-works-section {
-    z-index: 10; /* Đặt z-index cao hơn so với .hero-movie */
+    z-index: 10;
     position: relative;
     padding: 60px 20px;
     text-align: center;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-radius: 16px; /* Tăng border-radius */
+    border-radius: 16px;
     color: #fff;
     animation: fadeIn 1.2s ease;
 }
+
 .how-title {
     font-size: 32px;
     font-weight: bold;
@@ -989,13 +1351,14 @@ html, body {
 .steps-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around; /* Giãn đều các thẻ ra hai bên */
-    gap: 3rem; /* Tăng khoảng cách giữa các thẻ */
-    max-width: 1200px; /* Giới hạn nội dung bên trong */
-    margin: 0 auto; /* Căn giữa nội dung */
+    justify-content: space-around;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
+
 .step-card {
-    background-color: #252b35; /* Đã cập nhật màu theo yêu cầu */
+    background-color: #252b35;
     padding: 1.5rem;
     border-radius: 12px;
     width: 280px;
@@ -1030,6 +1393,7 @@ html, body {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
 .showtime-announcement {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(12px);
@@ -1073,7 +1437,6 @@ html, body {
     }
 }
 
-
 @keyframes fadeInSlide {
     0% {
         transform: translateY(10px);
@@ -1084,4 +1447,8 @@ html, body {
         opacity: 1;
     }
 }
-
+.banner-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
